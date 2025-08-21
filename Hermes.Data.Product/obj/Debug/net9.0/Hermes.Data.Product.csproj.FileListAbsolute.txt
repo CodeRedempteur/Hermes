@@ -1,0 +1,11 @@
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\bin\Debug\net9.0\Hermes.Data.Product.deps.json
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\bin\Debug\net9.0\Hermes.Data.Product.dll
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\bin\Debug\net9.0\Hermes.Data.Product.pdb
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.AssemblyInfoInputs.cache
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.AssemblyInfo.cs
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.csproj.CoreCompileInputs.cache
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.dll
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\refint\Hermes.Data.Product.dll
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\Hermes.Data.Product.pdb
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Data.Product\obj\Debug\net9.0\ref\Hermes.Data.Product.dll

@@ -1,0 +1,117 @@
+﻿/* ImageFallback.css - À ajouter dans app.css ou créer un fichier séparé */
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    border-radius: inherit;
+}
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity var(--transition-normal);
+    }
+
+/* Fallback container */
+.image-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 45, 136, 0.1) 0%, rgba(157, 43, 251, 0.1) 50%, rgba(84, 46, 255, 0.1) 100%);
+    backdrop-filter: blur(10px);
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    gap: var(--spacing-xs);
+}
+
+    .image-fallback.show {
+        opacity: 1;
+    }
+
+    .image-fallback i {
+        font-size: 3rem;
+        color: var(--accent-pink);
+        filter: drop-shadow(0 2px 8px rgba(255, 45, 136, 0.3));
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .image-fallback .fallback-text {
+        font-size: var(--font-size-small);
+        color: var(--text-secondary);
+        text-align: center;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+/* Animation flottante pour l'icône */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Variantes de fallback pour différents contextes */
+.image-fallback.product-fallback i {
+    font-size: 4rem;
+    color: var(--accent-purple);
+}
+
+.image-fallback.hero-fallback i {
+    font-size: 6rem;
+    color: var(--accent-pink);
+}
+
+.image-fallback.small-fallback i {
+    font-size: 2rem;
+}
+
+/* Hover effect sur le fallback */
+.image-container:hover .image-fallback i {
+    transform: scale(1.1);
+    color: var(--accent-pink-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .image-fallback i {
+        font-size: 2.5rem;
+    }
+
+    .image-fallback.product-fallback i {
+        font-size: 3rem;
+    }
+
+    .image-fallback.hero-fallback i {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-fallback i {
+        font-size: 2rem;
+    }
+
+    .image-fallback.product-fallback i {
+        font-size: 2.5rem;
+    }
+
+    .image-fallback .fallback-text {
+        font-size: 10px;
+    }
+}

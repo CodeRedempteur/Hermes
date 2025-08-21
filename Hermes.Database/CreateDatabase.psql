@@ -1,0 +1,121 @@
+﻿-- =======================
+-- DROP TABLES (reverse order for dependencies)
+-- =======================
+DROP TABLE IF EXISTS t_product CASCADE;
+DROP TABLE IF EXISTS images CASCADE;
+DROP TABLE IF EXISTS plastiques CASCADE;
+DROP TABLE IF EXISTS tags CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS stocks CASCADE;
+DROP TABLE IF EXISTS seos CASCADE;
+
+-- =======================
+-- TABLES DE BASE
+-- =======================
+
+-- 1. Table Images
+CREATE TABLE images (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    product_id INTEGER, -- référence optionnelle au produit
+    image_base64 JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Table Plastiques
+CREATE TABLE plastiques (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    nom TEXT NOT NULL,
+    cout_gramme NUMERIC(10, 2) NOT NULL
+);
+
+-- 3. Table Tags
+CREATE TABLE tags (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    nom TEXT NOT NULL
+);
+
+-- 4. Table Catégories
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    nom TEXT NOT NULL
+);
+
+-- 5. Table Stocks
+CREATE TABLE stocks (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    type_stock TEXT NOT NULL -- exemple : édition limitée, sur commande...
+);
+
+-- 6. Table SEO
+CREATE TABLE seos (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    titre TEXT NOT NULL,
+    description TEXT
+);
+
+-- =======================
+-- TABLE PRODUIT
+-- =======================
+CREATE TABLE t_product (
+    id SERIAL PRIMARY KEY,
+    workspace_id INTEGER DEFAULT 0,
+    nom TEXT NOT NULL,
+    description TEXT,
+    prix NUMERIC(10, 2) NOT NULL,
+    is_published BOOLEAN DEFAULT FALSE,  -- Nouvelle colonne ajoutée
+    image_id INTEGER REFERENCES images(id) ON DELETE SET NULL,
+    plastique_id INTEGER REFERENCES plastiques(id) ON DELETE SET NULL,
+    categorie_id INTEGER REFERENCES categories(id) ON DELETE SET NULL,
+    tag_id INTEGER REFERENCES tags(id) ON DELETE SET NULL,
+    stock_id INTEGER REFERENCES stocks(id) ON DELETE SET NULL,
+    seo_id INTEGER REFERENCES seos(id) ON DELETE SET NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =======================
+-- INDEX POUR PERFORMANCE
+-- =======================
+CREATE INDEX idx_product_nom ON t_product(nom);
+CREATE INDEX idx_product_categorie ON t_product(categorie_id);
+CREATE INDEX idx_product_tag ON t_product(tag_id);
+CREATE INDEX idx_product_stock ON t_product(stock_id);
+CREATE INDEX idx_product_plastique ON t_product(plastique_id);
+CREATE INDEX idx_product_image ON t_product(image_id);
+CREATE INDEX idx_product_seo ON t_product(seo_id);
+CREATE INDEX idx_product_published ON t_product(is_published);  -- Nouvel index pour la publication
+
+-- =======================
+-- DONNÉES D'EXEMPLE (OPTIONNEL)
+-- =======================
+
+-- Exemple de données pour tester
+INSERT INTO plastiques (nom, cout_gramme) VALUES 
+('PLA', 0.025),
+('ABS', 0.030),
+('PETG', 0.035);
+
+INSERT INTO categories (nom) VALUES 
+('Figurines'),
+('Outils'),
+('Décoration');
+
+INSERT INTO tags (nom) VALUES 
+('Nouveau'),
+('Populaire'),
+('Limité');
+
+INSERT INTO stocks (type_stock) VALUES 
+('En stock'),
+('Sur commande'),
+('Édition limitée');
+
+-- Exemple de produit
+INSERT INTO t_product (nom, description, prix, is_published) VALUES 
+('Figurine Dragon', 'Belle figurine de dragon imprimée en 3D', 29.99, true),
+('Vase Moderne', 'Vase au design contemporain', 19.99, false);

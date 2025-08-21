@@ -1,0 +1,246 @@
+﻿@* SecondaryNavbar.razor - Version optimisée *@
+
+<div class="secondary-navbar @(IsVisible ? "visible" : "")">
+    <div class="secondary-nav-container">
+
+        <!-- Section Recherche (Grid Item 1) -->
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text"
+                       class="search-input"
+                       placeholder="Rechercher une création..."
+                       @bind="SearchTerm"
+                       @bind:event="oninput" />
+                @if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    <button class="clear-search" @onclick="ClearSearch" title="Effacer la recherche">
+                        <i class="fas fa-times"></i>
+                    </button>
+                }
+            </div>
+        </div>
+
+        <!-- Section Filtres (Grid Item 2) -->
+        <div class="filters-section">
+            <!-- Filtre Catégorie -->
+            <div class="filter-group">
+                <select class="filter-select"
+                        @bind="SelectedCategory"
+                        title="Filtrer par catégorie">
+                    <option value="">Catégories</option>
+                    <option value="peluches">Peluches</option>
+                    <option value="figurines">Figurines</option>
+                    <option value="accessoires">Accessoires</option>
+                    <option value="collection">Collection</option>
+                </select>
+            </div>
+
+            <!-- Filtre Prix -->
+            <div class="filter-group">
+                <select class="filter-select"
+                        @bind="SelectedPriceRange"
+                        title="Filtrer par prix">
+                    <option value="">Tous prix</option>
+                    <option value="0-25">0€ - 25€</option>
+                    <option value="25-50">25€ - 50€</option>
+                    <option value="50-100">50€ - 100€</option>
+                    <option value="100+">100€+</option>
+                </select>
+            </div>
+
+            <!-- Tri -->
+            <div class="filter-group">
+                <select class="filter-select"
+                        @bind="SortBy"
+                        title="Trier les résultats">
+                    <option value="name-asc">Nom A-Z</option>
+                    <option value="name-desc">Nom Z-A</option>
+                    <option value="price-asc">Prix ↗</option>
+                    <option value="price-desc">Prix ↘</option>
+                    <option value="date-new">Plus récents</option>
+                    <option value="date-old">Plus anciens</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Filtres Checkboxes (Grid Item 3) -->
+        <div class="checkbox-filters">
+            <!-- Filtre Disponibilité -->
+            <div class="filter-group">
+                <div class="checkbox-group">
+                    <input type="checkbox"
+                           id="available-only"
+                           class="custom-checkbox"
+                           @bind="ShowAvailableOnly" />
+                    <label for="available-only" class="checkbox-label">
+                        Disponible
+                    </label>
+                </div>
+            </div>
+
+            <!-- Filtre Nouveautés -->
+            <div class="filter-group">
+                <div class="checkbox-group">
+                    <input type="checkbox"
+                           id="new-only"
+                           class="custom-checkbox"
+                           @bind="ShowNewOnly" />
+                    <label for="new-only" class="checkbox-label">
+                        Nouveautés
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Vue (Grid Item 4) -->
+        <div class="view-section">
+            <div class="view-toggle">
+                <button class="view-btn @(ViewMode == "grid" ? "active" : "")"
+                        @onclick='@(() => SetViewMode("grid"))'
+                        title="Vue grille">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn @(ViewMode == "list" ? "active" : "")"
+                        @onclick='@(() => SetViewMode("list"))'
+                        title="Vue liste">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Section Reset (Grid Item 5) -->
+        <div class="reset-section">
+            <button class="reset-btn" @onclick="ResetFilters" title="Réinitialiser tous les filtres">
+                <i class="fas fa-undo-alt"></i>
+                <span>Reset</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; } = true;
+
+    [Parameter] public EventCallback<string> OnSearchChanged { get; set; }
+    [Parameter] public EventCallback<string> OnCategoryChanged { get; set; }
+    [Parameter] public EventCallback<string> OnPriceRangeChanged { get; set; }
+    [Parameter] public EventCallback<string> OnSortChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnAvailabilityChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnNewItemsChanged { get; set; }
+    [Parameter] public EventCallback<string> OnViewModeChanged { get; set; }
+    [Parameter] public EventCallback OnFiltersReset { get; set; }
+
+    // Champs + propriétés avec callbacks dans les setters
+    private string _searchTerm = "";
+    private string SearchTerm
+    {
+        get => _searchTerm;
+        set
+        {
+            if (_searchTerm == value) return;
+            _searchTerm = value ?? "";
+            _ = OnSearchChanged.InvokeAsync(_searchTerm);
+        }
+    }
+
+    private string _selectedCategory = "";
+    private string SelectedCategory
+    {
+        get => _selectedCategory;
+        set
+        {
+            if (_selectedCategory == value) return;
+            _selectedCategory = value ?? "";
+            _ = OnCategoryChanged.InvokeAsync(_selectedCategory);
+        }
+    }
+
+    private string _selectedPriceRange = "";
+    private string SelectedPriceRange
+    {
+        get => _selectedPriceRange;
+        set
+        {
+            if (_selectedPriceRange == value) return;
+            _selectedPriceRange = value ?? "";
+            _ = OnPriceRangeChanged.InvokeAsync(_selectedPriceRange);
+        }
+    }
+
+    private string _sortBy = "name-asc";
+    private string SortBy
+    {
+        get => _sortBy;
+        set
+        {
+            if (_sortBy == value) return;
+            _sortBy = value ?? "name-asc";
+            _ = OnSortChanged.InvokeAsync(_sortBy);
+        }
+    }
+
+    private bool _showAvailableOnly = false;
+    private bool ShowAvailableOnly
+    {
+        get => _showAvailableOnly;
+        set
+        {
+            if (_showAvailableOnly == value) return;
+            _showAvailableOnly = value;
+            _ = OnAvailabilityChanged.InvokeAsync(_showAvailableOnly);
+        }
+    }
+
+    private bool _showNewOnly = false;
+    private bool ShowNewOnly
+    {
+        get => _showNewOnly;
+        set
+        {
+            if (_showNewOnly == value) return;
+            _showNewOnly = value;
+            _ = OnNewItemsChanged.InvokeAsync(_showNewOnly);
+        }
+    }
+
+    private string _viewMode = "grid";
+    private string ViewMode
+    {
+        get => _viewMode;
+        set
+        {
+            if (_viewMode == value) return;
+            _viewMode = value ?? "grid";
+            _ = OnViewModeChanged.InvokeAsync(_viewMode);
+        }
+    }
+
+    private void SetViewMode(string mode)
+    {
+        ViewMode = mode; // Le setter déclenche déjà OnViewModeChanged
+    }
+
+    private async Task ClearSearch()
+    {
+        SearchTerm = "";
+        await Task.CompletedTask;
+    }
+
+    private async Task ResetFilters()
+    {
+        SearchTerm = "";
+        SelectedCategory = "";
+        SelectedPriceRange = "";
+        SortBy = "name-asc";
+        ShowAvailableOnly = false;
+        ShowNewOnly = false;
+        ViewMode = "grid";
+
+        if (OnFiltersReset.HasDelegate)
+        {
+            await OnFiltersReset.InvokeAsync();
+        }
+    }
+}

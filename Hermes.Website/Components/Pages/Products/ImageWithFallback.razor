@@ -1,0 +1,50 @@
+﻿@* Composant ImageWithFallback.razor - À créer dans Components/Shared/ *@
+
+<div class="image-container @CssClass">
+    @if (!string.IsNullOrEmpty(ImageSrc))
+    {
+        <img src="@ImageSrc"
+             alt="@AltText"
+             loading="lazy"
+             style="@(showFallback ? "opacity: 0;" : "")"
+             @onload="OnImageLoad"
+             @onerror="OnImageError" />
+    }
+
+    <!-- Fallback avec icône -->
+    <div class="image-fallback @(showFallback ? "show" : "")">
+        <i class="@FallbackIcon"></i>
+        @if (!string.IsNullOrEmpty(FallbackText))
+        {
+            <span class="fallback-text">@FallbackText</span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? ImageSrc { get; set; }
+    [Parameter] public string AltText { get; set; } = "";
+    [Parameter] public string CssClass { get; set; } = "";
+    [Parameter] public string FallbackIcon { get; set; } = "fas fa-image";
+    [Parameter] public string? FallbackText { get; set; }
+
+    private bool showFallback = false;
+
+    protected override void OnParametersSet()
+    {
+        // Si pas d'image source, montrer le fallback immédiatement
+        showFallback = string.IsNullOrEmpty(ImageSrc);
+    }
+
+    private void OnImageLoad()
+    {
+        showFallback = false;
+        StateHasChanged();
+    }
+
+    private void OnImageError()
+    {
+        showFallback = true;
+        StateHasChanged();
+    }
+}

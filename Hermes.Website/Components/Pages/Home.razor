@@ -1,0 +1,176 @@
+﻿@page "/"
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+@rendermode InteractiveServer
+
+<Navigation_Special></Navigation_Special>
+
+<!-- SecondaryNavbar qui sera affiché/masqué par JavaScript -->
+<SecondaryNavbar @ref="secondaryNavbar"
+                 IsVisible="@showSecondaryNav"
+                 OnSearchChanged="HandleSearchChanged"
+                 OnCategoryChanged="HandleCategoryChanged"
+                 OnPriceRangeChanged="HandlePriceRangeChanged"
+                 OnSortChanged="HandleSortChanged"
+                 OnAvailabilityChanged="HandleAvailabilityChanged"
+                 OnNewItemsChanged="HandleNewItemsChanged"
+                 OnViewModeChanged="HandleViewModeChanged"
+                 OnFiltersReset="HandleFiltersReset" />
+
+<Hero_Section></Hero_Section>
+@* <About_Section></About_Section> *@
+
+<Products_Page SearchTerm="@currentSearchTerm"
+               CategoryFilter="@currentCategory"
+               PriceRangeFilter="@currentPriceRange"
+               SortBy="@currentSortBy"
+               AvailableOnly="@currentAvailableOnly"
+               NewItemsOnly="@currentNewItemsOnly"
+               ViewMode="@currentViewMode"
+               ResetTrigger="@resetTrigger"></Products_Page>
+
+<Process_Section></Process_Section>
+<Contact_Section></Contact_Section>
+<Footer_Special></Footer_Special>
+
+@code {
+    private SecondaryNavbar? secondaryNavbar;
+    private bool showSecondaryNav = false;
+    private DotNetObjectReference<Home>? dotNetRef;
+    private bool isJavaScriptInitialized = false;
+
+    // États des filtres que nous passons au composant Products_Page
+    private string currentSearchTerm = "";
+    private string currentCategory = "";
+    private string currentPriceRange = "";
+    private string currentSortBy = "name-asc";
+    private bool currentAvailableOnly = false;
+    private bool currentNewItemsOnly = false;
+    private string currentViewMode = "grid";
+    private int resetTrigger = 0; // Pour déclencher un reset
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !isJavaScriptInitialized)
+        {
+            try
+            {
+                dotNetRef = DotNetObjectReference.Create(this);
+                // Attendre que tous les composants soient rendus
+                await Task.Delay(500);
+                await JSRuntime.InvokeVoidAsync("initializeSecondaryNavbar", dotNetRef);
+                isJavaScriptInitialized = true;
+                Console.WriteLine("🚀 JavaScript initialisé avec succès");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erreur lors de l'initialisation JavaScript: {ex.Message}");
+                // Réessayer après un délai plus long
+                await Task.Delay(1000);
+                try
+                {
+                    await JSRuntime.InvokeVoidAsync("initializeSecondaryNavbar", dotNetRef);
+                    isJavaScriptInitialized = true;
+                    Console.WriteLine("🚀 JavaScript initialisé avec succès (retry)");
+                }
+                catch (Exception retryEx)
+                {
+                    Console.WriteLine($"❌ Erreur lors du retry JavaScript: {retryEx.Message}");
+                }
+            }
+        }
+    }
+
+    [JSInvokable]
+    public async Task ShowSecondaryNavbar()
+    {
+        Console.WriteLine("✅ ShowSecondaryNavbar appelée");
+        showSecondaryNav = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public async Task HideSecondaryNavbar()
+    {
+        Console.WriteLine("❌ HideSecondaryNavbar appelée");
+        showSecondaryNav = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    // Gestionnaires pour les événements du SecondaryNavbar
+    private async Task HandleSearchChanged(string searchTerm)
+    {
+        currentSearchTerm = searchTerm ?? "";
+        StateHasChanged();
+    }
+
+    private async Task HandleCategoryChanged(string category)
+    {
+        currentCategory = category ?? "";
+        StateHasChanged();
+    }
+
+    private async Task HandlePriceRangeChanged(string priceRange)
+    {
+        currentPriceRange = priceRange ?? "";
+        StateHasChanged();
+    }
+
+    private async Task HandleSortChanged(string sortBy)
+    {
+        currentSortBy = sortBy ?? "name-asc";
+        StateHasChanged();
+    }
+
+    private async Task HandleAvailabilityChanged(bool availableOnly)
+    {
+        currentAvailableOnly = availableOnly;
+        StateHasChanged();
+    }
+
+    private async Task HandleNewItemsChanged(bool newOnly)
+    {
+        currentNewItemsOnly = newOnly;
+        StateHasChanged();
+    }
+
+    private async Task HandleViewModeChanged(string viewMode)
+    {
+        currentViewMode = viewMode ?? "grid";
+        StateHasChanged();
+    }
+
+    private async Task HandleFiltersReset()
+    {
+        currentSearchTerm = "";
+        currentCategory = "";
+        currentPriceRange = "";
+        currentSortBy = "name-asc";
+        currentAvailableOnly = false;
+        currentNewItemsOnly = false;
+        currentViewMode = "grid";
+        resetTrigger++; // Incrémente pour déclencher le reset
+        StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            if (isJavaScriptInitialized)
+            {
+                await JSRuntime.InvokeVoidAsync("cleanupSecondaryNavbar");
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+            // Ignore les erreurs de déconnexion
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du dispose: {ex.Message}");
+        }
+
+        dotNetRef?.Dispose();
+    }
+}

@@ -1,0 +1,153 @@
+﻿<!-- Process Section -->
+<section id="process" class="process">
+    <div class="container">
+        <div class="section-title">
+            <h2>Mon Processus de Création</h2>
+            <p>De l'idée à la réalisation, découvrez comment je transforme vos concepts en créations 3D uniques</p>
+        </div>
+
+        <div class="process-steps">
+            <!-- Étape 1 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Conception</h3>
+                <p>Analyse de vos besoins et création du design initial avec esquisse détaillée et validation du concept</p>
+            </div>
+
+            <!-- Étape 2 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h3>Modélisation 3D</h3>
+                <p>Création du modèle 3D avec logiciels professionnels, optimisation pour l'impression et tests de faisabilité</p>
+            </div>
+
+            <!-- Étape 3 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-print"></i>
+                </div>
+                <h3>Impression</h3>
+                <p>Impression haute qualité avec matériaux premium, contrôle qualité rigoureux et finitions soignées</p>
+            </div>
+
+            <!-- Étape 4 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Livraison</h3>
+                <p>Emballage sécurisé et expédition rapide avec suivi, accompagnement et service après-vente personnalisé</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Version alternative avec étapes complétées -->
+<section id="process-alt" class="process" style="display: none;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Processus de Création Avancé</h2>
+            <p>Une approche méthodique pour des résultats exceptionnels</p>
+        </div>
+
+        <div class="process-steps animate-progress">
+            <!-- Étape 1 - Complétée -->
+            <div class="step completed reveal">
+                <div class="step-icon shine">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Idéation</h3>
+                <p>Brainstorming créatif et recherche d'inspiration pour développer des concepts innovants et originaux</p>
+            </div>
+
+            <!-- Étape 2 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-drafting-compass"></i>
+                </div>
+                <h3>Design Technique</h3>
+                <p>Création des plans techniques détaillés avec spécifications précises et calculs de résistance</p>
+            </div>
+
+            <!-- Étape 3 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>Prototypage</h3>
+                <p>Réalisation de prototypes de test pour validation des dimensions et ajustements nécessaires</p>
+            </div>
+
+            <!-- Étape 4 -->
+            <div class="step reveal">
+                <div class="step-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Finalisation</h3>
+                <p>Production finale avec contrôle qualité premium et conditionnement de luxe pour la livraison</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Version minimaliste -->
+<section id="process-minimal" class="process minimal" style="display: none;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Étapes Simplifiées</h2>
+        </div>
+
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h3>Consultation</h3>
+                <p>Échange sur vos besoins</p>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Création</h3>
+                <p>Réalisation de votre projet</p>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Satisfaction</h3>
+                <p>Livraison et bonheur client</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // JavaScript pour l'animation de révélation au scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments avec la classe 'reveal'
+        document.querySelectorAll('.step.reveal').forEach(step => {
+            observer.observe(step);
+        });
+    });
+</script>

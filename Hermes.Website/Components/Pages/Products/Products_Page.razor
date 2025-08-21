@@ -1,0 +1,589 @@
+﻿@using Hermes.Website.Services
+@using Hermes.Data.Product.Models
+@inject ProductService ProductService
+@rendermode InteractiveServer
+
+<PageTitle>Nos Créations - Eternal Bears</PageTitle>
+<div class="topPage" id="topPage"></div>
+
+<!-- IMPORTANT: Ajouter l'ID "products" pour que le JavaScript puisse le détecter -->
+<div class="products-showcase-container" id="products">
+    <div class="container">
+        @* Products Content *@
+        <div class="products-content">
+            @if (isLoading)
+            {
+                @* Loading State *@
+                <div class="loading-container">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Chargement des produits...</span>
+                    </div>
+                </div>
+            }
+            else if (!GetCurrentPageProducts().Any())
+            {
+                @* No Results State *@
+                <div class="no-results">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Aucun produit trouvé</h3>
+                    <p>Essayez de modifier vos critères de recherche ou filtres.</p>
+                    <button class="btn btn-primary" @onclick="ClearAllFilters">
+                        <i class="fas fa-refresh"></i>
+                        Réinitialiser les filtres
+                    </button>
+                </div>
+            }
+            else
+            {
+                @* Products Grid/List *@
+                <div class="products-grid @viewMode">
+                    @foreach (var product in GetCurrentPageProducts())
+                    {
+                        <div class="product-card" @onclick="() => ViewProduct(product.Id)">
+                            @* Product Image avec Fallback *@
+                            <div class="product-image">
+                                    @{
+                                        string? imageSrc = null;
+                                        if (product.ImageId.HasValue && productImages.ContainsKey(product.ImageId.Value))
+                                        {
+                                            imageSrc = $"data:image/jpeg;base64,{productImages[product.ImageId.Value]}";
+                                        }
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(imageSrc))
+                                    {
+                                        <img src="@imageSrc"
+                                             alt="@product.Nom"
+                                             loading="lazy"
+                                             style="@(GetImageErrorState(product.Id) ? "opacity: 0;" : "")"
+                                             @onload="@(() => OnImageLoad(product.Id))"
+                                             @onerror="@(() => OnImageError(product.Id))" />
+                                    }
+
+                                    <!-- Fallback avec icône simple -->
+                          
+                                <div class="image-fallback @(ShouldShowFallback(product.Id, imageSrc) ? "show" : "")">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                @* Overlay Actions *@
+                                <div class="product-overlay">
+                                    <div class="overlay-actions">
+                                        <button class="action-btn" title="Voir les détails"
+                                                @onclick:stopPropagation="true"
+                                                @onclick="() => ViewProduct(product.Id)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn" title="Ajouter aux favoris"
+                                                @onclick:stopPropagation="true"
+                                                @onclick="() => AddToFavorites(product.Id)">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                        @if (product.IsPublished)
+                                        {
+                                            <button class="action-btn primary" title="Ajouter au panier"
+                                                    @onclick:stopPropagation="true"
+                                                    @onclick="() => AddToCart(product.Id)">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+
+                                @* Product Badges *@
+                                @if (IsNewProduct(product.CreatedAt))
+                                {
+                                    <span class="product-badge new">Nouveau</span>
+                                }
+                                @if (IsLimitedEdition(product.Id))
+                                {
+                                    <span class="product-badge limited">Édition limitée</span>
+                                }
+                                @if (!product.IsPublished)
+                                {
+                                    <span class="product-badge unavailable">Épuisé</span>
+                                }
+                            </div>
+
+                            @* Product Info *@
+                            <div class="product-info">
+                                <div class="product-category">@GetCategoryDisplayName(GetProductCategory(product))</div>
+                                <h3 class="product-name">@product.Nom</h3>
+                                <p class="product-description">@(string.IsNullOrEmpty(product.Description) ? "Description à venir..." : product.Description)</p>
+
+                                @*  Prix et autres infos du produit *@
+                                <div class="product-price">@product.Prix.ToString("F0")€</div>
+                                <div class="product-meta">
+                                    <span class="product-status">@(product.IsPublished ? "Disponible" : "Non publié")</span>
+                                    <span class="product-date">@product.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        @* Pagination *@
+        @if (GetTotalPages() > 1)
+        {
+            <div class="pagination-container">
+                <nav class="pagination">
+                    <button class="page-btn"
+                            @onclick="() => GoToPage(1)"
+                            disabled="@(currentPage == 1)"
+                            title="Première page">
+                        <i class="fas fa-angle-double-left"></i>
+                    </button>
+
+                    <button class="page-btn"
+                            @onclick="() => GoToPage(currentPage - 1)"
+                            disabled="@(currentPage == 1)"
+                            title="Page précédente">
+                        <i class="fas fa-angle-left"></i>
+                    </button>
+
+                    @foreach (var page in GetPageNumbers())
+                    {
+                        <button class="page-btn @(page == currentPage ? "active" : "")"
+                                @onclick="() => GoToPage(page)">
+                            @(@page)
+                        </button>
+                    }
+
+                    <button class="page-btn"
+                            @onclick="() => GoToPage(currentPage + 1)"
+                            disabled="@(currentPage == GetTotalPages())"
+                            title="Page suivante">
+                        <i class="fas fa-angle-right"></i>
+                    </button>
+
+                    <button class="page-btn"
+                            @onclick="() => GoToPage(GetTotalPages())"
+                            disabled="@(currentPage == GetTotalPages())"
+                            title="Dernière page">
+                        <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </nav>
+
+                <div class="pagination-info">
+                    Page @currentPage sur @GetTotalPages()
+                    (@((currentPage - 1) * itemsPerPage + 1) - @Math.Min(currentPage * itemsPerPage, filteredProducts.Count) sur @filteredProducts.Count)
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    #region Parameters (nouveaux paramètres pour recevoir les filtres)
+    [Parameter] public string SearchTerm { get; set; } = "";
+    [Parameter] public string CategoryFilter { get; set; } = "";
+    [Parameter] public string PriceRangeFilter { get; set; } = "";
+    [Parameter] public string SortBy { get; set; } = "name-asc";
+    [Parameter] public bool AvailableOnly { get; set; } = false;
+    [Parameter] public bool NewItemsOnly { get; set; } = false;
+    [Parameter] public string ViewMode { get; set; } = "grid";
+    [Parameter] public int ResetTrigger { get; set; } = 0;
+    #endregion
+
+    #region State Variables
+    private Product[] allProducts = Array.Empty<Product>();
+    private List<Product> filteredProducts = new();
+    private Dictionary<int, string> productImages = new();
+    private Dictionary<int, bool> imageErrorStates = new(); // Track des erreurs d'image
+    private string searchQuery = string.Empty;
+    private string selectedCategory = string.Empty;
+    private decimal priceFilter = 200;
+    private decimal maxPrice = 200;
+    private string sortBy = "name";
+    private bool showAvailableOnly = false;
+    private bool showNewOnly = false;
+    private string viewMode = "grid";
+    private int currentPage = 1;
+    private int itemsPerPage = 24;
+    private bool isLoading = true;
+    private int totalProducts = 0;
+    private int lastResetTrigger = 0;
+    #endregion
+
+    #region Image Fallback Methods
+    private bool ShouldShowFallback(int productId, string? imageSrc)
+    {
+        return string.IsNullOrEmpty(imageSrc) || GetImageErrorState(productId);
+    }
+
+    private bool GetImageErrorState(int productId)
+    {
+        return imageErrorStates.GetValueOrDefault(productId, false);
+    }
+
+    private void OnImageLoad(int productId)
+    {
+        imageErrorStates[productId] = false;
+        StateHasChanged();
+    }
+
+    private void OnImageError(int productId)
+    {
+        imageErrorStates[productId] = true;
+        StateHasChanged();
+    }
+    #endregion
+
+    #region Lifecycle Methods
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+        ApplyFilters();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Vérifier si les paramètres ont changé
+        bool hasChanged = false;
+
+        if (searchQuery != SearchTerm)
+        {
+            searchQuery = SearchTerm;
+            hasChanged = true;
+        }
+
+        if (selectedCategory != CategoryFilter)
+        {
+            selectedCategory = CategoryFilter;
+            hasChanged = true;
+        }
+
+        if (PriceRangeFilter != GetCurrentPriceRangeString())
+        {
+            UpdatePriceFromRange(PriceRangeFilter);
+            hasChanged = true;
+        }
+
+        if (GetCurrentSortString() != SortBy)
+        {
+            UpdateSortFromString(SortBy);
+            hasChanged = true;
+        }
+
+        if (showAvailableOnly != AvailableOnly)
+        {
+            showAvailableOnly = AvailableOnly;
+            hasChanged = true;
+        }
+
+        if (showNewOnly != NewItemsOnly)
+        {
+            showNewOnly = NewItemsOnly;
+            hasChanged = true;
+        }
+
+        if (viewMode != ViewMode)
+        {
+            viewMode = ViewMode;
+            hasChanged = true;
+        }
+
+        // Gestion du reset
+        if (ResetTrigger != lastResetTrigger)
+        {
+            lastResetTrigger = ResetTrigger;
+            await ResetAllFilters();
+            hasChanged = true;
+        }
+
+        if (hasChanged)
+        {
+            ApplyFilters();
+            StateHasChanged();
+        }
+    }
+    #endregion
+
+    #region Parameter Helper Methods
+    private string GetCurrentPriceRangeString()
+    {
+        if (priceFilter >= maxPrice) return "";
+        // Logique pour déterminer la plage actuelle basée sur priceFilter
+        if (priceFilter <= 25) return "0-25";
+        if (priceFilter <= 50) return "25-50";
+        if (priceFilter <= 100) return "50-100";
+        return "100+";
+    }
+
+    private void UpdatePriceFromRange(string priceRange)
+    {
+        if (string.IsNullOrEmpty(priceRange))
+        {
+            priceFilter = maxPrice;
+        }
+        else
+        {
+            var parts = priceRange.Split('-');
+            if (parts.Length == 2 && decimal.TryParse(parts[1], out var maxPriceFromRange))
+            {
+                priceFilter = maxPriceFromRange;
+            }
+            else if (priceRange.EndsWith("+") && decimal.TryParse(priceRange.Replace("+", ""), out var minPrice))
+            {
+                priceFilter = maxPrice; // Pour "100+", on utilise le prix maximum
+            }
+        }
+    }
+
+    private string GetCurrentSortString()
+    {
+        return sortBy switch
+        {
+            "name" => "name-asc",
+            "name_desc" => "name-desc",
+            "price" => "price-asc",
+            "price_desc" => "price-desc",
+            "newest" => "date-new",
+            "oldest" => "date-old",
+            _ => "name-asc"
+        };
+    }
+
+    private void UpdateSortFromString(string newSortBy)
+    {
+        sortBy = newSortBy switch
+        {
+            "name-asc" => "name",
+            "name-desc" => "name_desc",
+            "price-asc" => "price",
+            "price-desc" => "price_desc",
+            "date-new" => "newest",
+            "date-old" => "oldest",
+            _ => "name"
+        };
+    }
+
+    private async Task ResetAllFilters()
+    {
+        searchQuery = "";
+        selectedCategory = "";
+        priceFilter = maxPrice;
+        showAvailableOnly = false;
+        showNewOnly = false;
+        sortBy = "name";
+        viewMode = "grid";
+    }
+    #endregion
+
+    #region Data Loading
+    private async Task LoadProducts()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Charger tous les produits depuis la DB
+            allProducts = await ProductService.GetAllProductsAsync();
+            totalProducts = allProducts.Length;
+
+            if (allProducts.Any())
+            {
+                maxPrice = allProducts.Max(p => p.Prix);
+                priceFilter = maxPrice;
+            }
+
+            // Charger les images
+            await LoadProductImages();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du chargement des produits: {ex.Message}");
+            allProducts = Array.Empty<Product>();
+        }
+
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task LoadProductImages()
+    {
+        if (allProducts == null || !allProducts.Any()) return;
+
+        foreach (var product in allProducts.Where(p => p.ImageId.HasValue))
+        {
+            try
+            {
+                // Récupérer les détails du produit avec l'image
+                var productWithDetails = await ProductService.GetProductWithDetailsAsync(product.Id);
+
+                // TODO: Adapter selon la structure de votre ImageProduct
+                // Si l'image est stockée en base64 dans ImageBase64
+                // productImages[product.ImageId.Value] = productWithDetails.Image?.ImageBase64 ?? "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors du chargement de l'image pour le produit {product.Id}: {ex.Message}");
+                // Marquer cette image comme en erreur
+                if (product.ImageId.HasValue)
+                {
+                    imageErrorStates[product.Id] = true;
+                }
+            }
+        }
+    }
+    #endregion
+
+    // ... (rest of the existing methods remain the same)
+
+    #region Filter and Search Methods
+    private void ApplyFilters()
+    {
+        var query = allProducts.AsQueryable();
+
+        // Search filter
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var searchLower = searchQuery.ToLowerInvariant();
+            query = query.Where(p =>
+                p.Nom.ToLowerInvariant().Contains(searchLower) ||
+                (p.Description != null && p.Description.ToLowerInvariant().Contains(searchLower)));
+        }
+
+        // Category filter
+        if (!string.IsNullOrEmpty(selectedCategory))
+        {
+            // Vous pouvez implémenter ceci si vous ajoutez une relation avec la table categories
+        }
+
+        // Price filter
+        query = query.Where(p => p.Prix <= priceFilter);
+
+        // Availability filter
+        if (showAvailableOnly)
+        {
+            query = query.Where(p => p.IsPublished);
+        }
+
+        // New products filter
+        if (showNewOnly)
+        {
+            query = query.Where(p => IsNewProduct(p.CreatedAt));
+        }
+
+        // Sorting
+        query = sortBy switch
+        {
+            "name" => query.OrderBy(p => p.Nom),
+            "name_desc" => query.OrderByDescending(p => p.Nom),
+            "price" => query.OrderBy(p => p.Prix),
+            "price_desc" => query.OrderByDescending(p => p.Prix),
+            "newest" => query.OrderByDescending(p => p.CreatedAt),
+            "oldest" => query.OrderBy(p => p.CreatedAt),
+            "popular" => query.OrderByDescending(p => p.Id),
+            _ => query.OrderBy(p => p.Nom)
+        };
+
+        filteredProducts = query.ToList();
+        currentPage = 1; // Reset to first page when filters change
+    }
+
+    private void ClearAllFilters()
+    {
+        searchQuery = string.Empty;
+        selectedCategory = string.Empty;
+        priceFilter = maxPrice;
+        showAvailableOnly = false;
+        showNewOnly = false;
+        sortBy = "name";
+        ApplyFilters();
+    }
+    #endregion
+
+    #region View and Pagination Methods
+    private List<Product> GetCurrentPageProducts()
+    {
+        return filteredProducts
+            .Skip((currentPage - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToList();
+    }
+
+    private int GetTotalPages()
+    {
+        return (int)Math.Ceiling((double)filteredProducts.Count / itemsPerPage);
+    }
+
+    private void GoToPage(int page)
+    {
+        if (page >= 1 && page <= GetTotalPages())
+        {
+            currentPage = page;
+            StateHasChanged();
+        }
+    }
+
+    private List<int> GetPageNumbers()
+    {
+        var totalPages = GetTotalPages();
+        var pages = new List<int>();
+
+        var start = Math.Max(1, currentPage - 2);
+        var end = Math.Min(totalPages, currentPage + 2);
+
+        for (int i = start; i <= end; i++)
+        {
+            pages.Add(i);
+        }
+
+        return pages;
+    }
+    #endregion
+
+    #region Utility Methods
+    private string GetCategoryDisplayName(string category)
+    {
+        if (string.IsNullOrEmpty(category)) return "Non classé";
+        return category;
+    }
+
+    private string GetProductCategory(Product product)
+    {
+        return "Ours en peluche";
+    }
+
+    private bool IsNewProduct(DateTime createdAt)
+    {
+        return (DateTime.Now - createdAt).TotalDays <= 30;
+    }
+
+    private bool IsLimitedEdition(int productId)
+    {
+        return productId <= 10;
+    }
+    #endregion
+
+    #region Action Methods
+    private void ViewProduct(int productId)
+    {
+        Console.WriteLine($"Viewing product {productId}");
+    }
+
+    private void AddToCart(int productId)
+    {
+        var product = allProducts.FirstOrDefault(p => p.Id == productId);
+        if (product != null && product.IsPublished)
+        {
+            Console.WriteLine($"Adding product {product.Nom} to cart");
+        }
+    }
+
+    private void AddToFavorites(int productId)
+    {
+        var product = allProducts.FirstOrDefault(p => p.Id == productId);
+        if (product != null)
+        {
+            Console.WriteLine($"Adding product {product.Nom} to favorites");
+        }
+    }
+    #endregion
+}

@@ -1,0 +1,168 @@
+﻿@using Hermes.Website.Services
+@using Hermes.Data.Product.Models
+@inject ProductService ProductService
+@inject IJSRuntime JSRuntime
+
+
+<section id="products" class="products">
+    <div class="container">
+        <div class="section-title">
+            <h2>Mes Créations</h2>
+        </div>
+
+        <!-- Filtres optionnels -->
+        <div class="product-filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="nouveaute">Nouveautés</button>
+            <button class="filter-btn" data-filter="best-seller">Best-sellers</button>
+            <button class="filter-btn" data-filter="innovant">Innovants</button>
+        </div>
+
+        @if (isLoading)
+        {
+            <div class="product-grid">
+                <div class="loading-spinner">
+                    <p>Chargement des produits...</p>
+                </div>
+            </div>
+        }
+        else if (products != null && products.Any())
+        {
+            <div class="product-grid">
+                @for (int i = 0; i < Math.Min(3, products.Length); i++)
+                {
+                    var product = products[i];
+                    var cardClass = i == 0 ? "product-card featured" : "product-card";
+                    var tagClass = i == 0 ? "nouveaute" : (i == 1 ? "edition-limitee" : "best-seller");
+                    var tagText = i == 0 ? "Nouveauté" : (i == 1 ? "Édition limitée" : "Best-seller");
+
+                    <div class="@cardClass">
+                        <div class="product-image">
+                            @if (product.ImageId.HasValue && productImages.ContainsKey(product.ImageId.Value))
+                            {
+                                <img src="data:image/jpeg;base64,@productImages[product.ImageId.Value]" alt="@product.Nom">
+                            }
+                            else
+                            {
+                                <img src="https://images.unsplash.com/photo-1607853201226-792f6c8a7e0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="@product.Nom">
+                            }
+                        </div>
+                        <div class="product-info">
+                            <div class="product-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star@(i == 1 ? " empty" : "")">★</span>
+                            </div>
+                            <h3>@product.Nom</h3>
+                            <p>@(string.IsNullOrEmpty(product.Description) ? "Description à venir" : product.Description)</p>
+                            <div class="product-price">
+                                @product.Prix.ToString("F0")€
+                                @if (i == 2)
+                                {
+                                    <span class="product-price-badge">★ Top</span>
+                                }
+                            </div>
+                            <div class="product-actions">
+                                <a href="#" class="btn-small" @onclick="() => ViewProduct(product.Id)" @onclick:preventDefault="true">Voir détails</a>
+                                <a href="#" class="btn-outline-small">♡ Favoris</a>
+                            </div>
+                        </div>
+                        <span class="product-tag @tagClass">@tagText</span>
+                        @if (i == 1)
+                        {
+                            <span class="product-discount">-10%</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="product-grid">
+                <div class="no-products">
+                    <p>Aucun produit disponible pour le moment.</p>
+                </div>
+            </div>
+        }
+
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @errorMessage
+            </div>
+        }
+
+        <!-- Bouton charger plus -->
+        <div class="load-more">
+            <a href="products#topPage" class="btn">Charger plus de créations</a>
+        </div>
+    </div>
+</section>
+
+@code {
+    private Product[]? products;
+    private bool isLoading = true;
+    private string? errorMessage;
+    private Dictionary<int, string> productImages = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        try
+        {
+            isLoading = true;
+            errorMessage = null;
+
+            // Récupérer les 3 premiers produits publiés
+            var allProducts = await ProductService.GetProductsByStatusAsync(true);
+            products = allProducts.Take(3).ToArray();
+
+            // Charger les images si nécessaire
+            await LoadProductImages();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erreur lors du chargement des produits: {ex.Message}";
+            products = Array.Empty<Product>();
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadProductImages()
+    {
+        if (products == null) return;
+
+        foreach (var product in products.Where(p => p.ImageId.HasValue))
+        {
+            try
+            {
+                // Récupérer les détails du produit avec l'image
+                var productWithDetails = await ProductService.GetProductWithDetailsAsync(product.Id);
+
+                // TODO: Adapter selon votre structure d'image
+                // Si l'image est dans productWithDetails.Image.ImageBase64
+                // productImages[product.ImageId.Value] = productWithDetails.Image?.ImageBase64 ?? "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors du chargement de l'image pour le produit {product.Id}: {ex.Message}");
+            }
+        }
+    }
+
+    private async Task ViewProduct(int productId)
+    {
+        // Navigation vers la page de détail du produit
+        await JSRuntime.InvokeVoidAsync("console.log", $"Voir produit {productId}");
+    }
+}

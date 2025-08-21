@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes.Website", "Hermes.Website\Hermes.Website.csproj", "{9B46D02E-84B2-482C-B758-24D5CED6B528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes.Data.Product", "Hermes.Data.Product\Hermes.Data.Product.csproj", "{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes.Database", "Hermes.Database\Hermes.Database.csproj", "{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes.ApplicationHost", "Hermes.ApplicationHost\Hermes.ApplicationHost.csproj", "{64024B0F-D344-4179-BFB5-D95799C81BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hermes.CoreServiceAPI", "Hermes.CoreServiceAPI\Hermes.CoreServiceAPI.csproj", "{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B46D02E-84B2-482C-B758-24D5CED6B528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B46D02E-84B2-482C-B758-24D5CED6B528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B46D02E-84B2-482C-B758-24D5CED6B528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B46D02E-84B2-482C-B758-24D5CED6B528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64024B0F-D344-4179-BFB5-D95799C81BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64024B0F-D344-4179-BFB5-D95799C81BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64024B0F-D344-4179-BFB5-D95799C81BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64024B0F-D344-4179-BFB5-D95799C81BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C039B87-3E64-4EAD-8D6A-FCE81F425AF5}
+	EndGlobalSection
+EndGlobal

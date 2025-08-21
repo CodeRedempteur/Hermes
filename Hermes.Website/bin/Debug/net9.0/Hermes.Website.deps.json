@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Hermes.Website/1.0.0": {
+        "dependencies": {
+          "Hermes.Data.Product": "1.0.0"
+        },
+        "runtime": {
+          "Hermes.Website.dll": {}
+        }
+      },
+      "Hermes.Data.Product/1.0.0": {
+        "runtime": {
+          "Hermes.Data.Product.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Hermes.Website/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Hermes.Data.Product/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

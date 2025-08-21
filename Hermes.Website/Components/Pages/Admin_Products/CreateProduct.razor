@@ -1,0 +1,749 @@
+﻿@page "/admin/create-product"
+@using Hermes.Website.Services
+@using Hermes.Data.Product.Models
+@inject ProductService ProductService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Créer un produit - Eternal Bears</PageTitle>
+<Navigation_Special></Navigation_Special>
+
+<div class="create-product-pro-container">
+    <div class="container">
+        <!-- Header avec progress -->
+        <div class="product-creation-header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-cube"></i>
+                    Création de produit
+                </h1>
+                <p>Suivez les étapes pour créer votre nouveau produit Eternal Bears</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                @for (int i = 0; i < steps.Count; i++)
+                {
+                    var step = steps[i];
+                    var index = i;
+                    <div class="step-item @(currentStep == index ? "active" : "") @(currentStep > index ? "completed" : "")">
+                        <div class="step-circle">
+                            @if (currentStep > index)
+                            {
+                                <i class="fas fa-check"></i>
+                            }
+                            else
+                            {
+                                <span>@(index + 1)</span>
+                            }
+                        </div>
+                        <div class="step-label">
+                            <span class="step-title">@step.Title</span>
+                            <span class="step-description">@step.Description</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Messages d'erreur/succès -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle"></i>
+                @errorMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                @successMessage
+            </div>
+        }
+
+        <!-- Main Content Area -->
+        <div class="creation-workspace">
+            <!-- Sidebar Navigation -->
+            <div class="steps-sidebar">
+                <div class="sidebar-header">
+                    <h3>Étapes de création</h3>
+                    <div class="progress-indicator">
+                        <span>@(currentStep + 1) / @steps.Count</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: @(((float)(currentStep + 1) / steps.Count) * 100)%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="steps-nav">
+                    @for (int i = 0; i < steps.Count; i++)
+                    {
+                        var step = steps[i];
+                        var index = i;
+                        <button type="button"
+                                class="nav-step @(currentStep == index ? "active" : "") @(currentStep > index ? "completed" : "") @(index > currentStep ? "disabled" : "")"
+                                @onclick="() => GoToStep(index)"
+                                disabled="@(index > currentStep)">
+                            <div class="nav-step-icon">
+                                @if (currentStep > index)
+                                {
+                                    <i class="fas fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i class="@step.Icon"></i>
+                                }
+                            </div>
+                            <div class="nav-step-content">
+                                <span class="nav-step-title">@step.Title</span>
+                                <span class="nav-step-desc">@step.Description</span>
+                            </div>
+                        </button>
+                    }
+                </nav>
+
+                <!-- Quick Actions -->
+                <div class="sidebar-actions">
+                    <button type="button" class="btn btn-ghost" @onclick="SaveAsDraft" disabled="@isProcessing">
+                        <i class="fas fa-save"></i>
+                        Sauvegarder
+                    </button>
+                    <button type="button" class="btn btn-ghost" @onclick="PreviewProduct">
+                        <i class="fas fa-eye"></i>
+                        Aperçu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="step-container">
+                    <!-- Step Content -->
+                    @if (currentStep == 0)
+                    {
+                        <!-- Étape 1: Images -->
+                        <div class="step-content step-images">
+                            <div class="step-header">
+                                <h2>
+                                    <i class="fas fa-images"></i>
+                                    Images du produit
+                                </h2>
+                                <p>Ajoutez des images haute qualité de votre création</p>
+                            </div>
+
+                            <div class="image-upload-pro">
+                                @if (!selectedImages.Any())
+                                {
+                                    <div class="upload-zone" @ondragover:preventDefault="true" @ondrop:preventDefault="true">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <h3>Glissez vos images ici</h3>
+                                        <p>ou cliquez pour sélectionner des fichiers</p>
+                                        <div class="upload-specs">
+                                            <span><i class="fas fa-check"></i> JPG, PNG, WebP</span>
+                                            <span><i class="fas fa-check"></i> Max 10MB par image</span>
+                                            <span><i class="fas fa-check"></i> Jusqu'à 8 images</span>
+                                        </div>
+                                        <InputFile OnChange="@HandleImageSelection"
+                                                   multiple
+                                                   accept="image/*"
+                                                   class="file-input"
+                                                   id="imageInput" />
+                                        <label for="imageInput" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-plus"></i>
+                                            Sélectionner les images
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="images-manager">
+                                        <div class="images-grid">
+                                            @for (int i = 0; i < selectedImages.Count; i++)
+                                            {
+                                                var index = i;
+                                                <div class="image-card @(index == 0 ? "primary" : "")">
+                                                    <div class="image-preview">
+                                                        <img src="@selectedImages[index].DataUrl" alt="Image @(index + 1)" />
+                                                        <div class="image-overlay">
+                                                            <div class="image-actions">
+                                                                @if (index != 0)
+                                                                {
+                                                                    <button type="button" class="btn-icon btn-primary" @onclick="() => SetAsPrimary(index)" title="Image principale">
+                                                                        <i class="fas fa-star"></i>
+                                                                    </button>
+                                                                }
+                                                                <button type="button" class="btn-icon btn-danger" @onclick="() => RemoveImage(index)" title="Supprimer">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @if (index == 0)
+                                                    {
+                                                        <div class="primary-badge">
+                                                            <i class="fas fa-crown"></i>
+                                                            Image principale
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+
+                                            @if (selectedImages.Count < 8)
+                                            {
+                                                <div class="add-more-card">
+                                                    <InputFile OnChange="@HandleImageSelection"
+                                                               multiple
+                                                               accept="image/*"
+                                                               class="file-input"
+                                                               id="moreImages" />
+                                                    <label for="moreImages" class="add-more-content">
+                                                        <i class="fas fa-plus"></i>
+                                                        <span>Ajouter plus</span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="images-info">
+                                            <div class="info-card">
+                                                <i class="fas fa-info-circle"></i>
+                                                <div>
+                                                    <strong>@selectedImages.Count / 8 images</strong>
+                                                    <p>La première image sera utilisée comme image principale</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else if (currentStep == 1)
+                    {
+                        <!-- Étape 2: Informations de base -->
+                        <div class="step-content step-info">
+                            <div class="step-header">
+                                <h2>
+                                    <i class="fas fa-info-circle"></i>
+                                    Informations générales
+                                </h2>
+                                <p>Décrivez votre produit en détail</p>
+                            </div>
+
+                            <div class="info-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="productName" class="required">Nom du produit</label>
+                                        <input type="text" id="productName" class="form-control @(string.IsNullOrWhiteSpace(productName) ? "error" : "")"
+                                               @bind="productName" placeholder="Ex: Ours Tribal Édition Limitée" />
+                                        <div class="field-hint">Choisissez un nom accrocheur et descriptif</div>
+                                        @if (string.IsNullOrWhiteSpace(productName))
+                                        {
+                                            <div class="field-error">Le nom du produit est requis</div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description" class="required">Description</label>
+                                    <div class="textarea-wrapper">
+                                        <textarea id="description" class="form-control @(string.IsNullOrWhiteSpace(productDescription) ? "error" : "")"
+                                                  @bind="productDescription"
+                                                  placeholder="Décrivez votre produit, ses caractéristiques uniques, son processus de création..."
+                                                  rows="6" maxlength="800"></textarea>
+                                        <div class="textarea-footer">
+                                            <div class="char-count">@(productDescription?.Length ?? 0) / 800 caractères</div>
+                                            <div class="writing-tips">
+                                                <i class="fas fa-lightbulb"></i>
+                                                <span>Mentionnez les matériaux, finitions, et points forts</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (string.IsNullOrWhiteSpace(productDescription))
+                                    {
+                                        <div class="field-error">La description du produit est requise</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (currentStep == 2)
+                    {
+                        <!-- Étape 3: Prix et disponibilité -->
+                        <div class="step-content step-pricing">
+                            <div class="step-header">
+                                <h2>
+                                    <i class="fas fa-euro-sign"></i>
+                                    Prix et disponibilité
+                                </h2>
+                                <p>Définissez le prix et la gestion des stocks</p>
+                            </div>
+
+                            <div class="pricing-form">
+                                <div class="pricing-main">
+                                    <div class="price-input-group">
+                                        <label for="price" class="required">Prix de vente</label>
+                                        <div class="price-input-wrapper">
+                                            <input type="number" id="price" class="form-control price-input @((!productPrice.HasValue || productPrice <= 0) ? "error" : "")"
+                                                   @bind="productPrice" placeholder="0.00" step="0.01" min="0" />
+                                            <span class="currency">€</span>
+                                        </div>
+                                        @if (!productPrice.HasValue || productPrice <= 0)
+                                        {
+                                            <div class="field-error">Le prix doit être supérieur à 0</div>
+                                        }
+                                    </div>
+
+                                    <div class="availability-toggle">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" @bind="isPublished" />
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-label">Publier le produit immédiatement</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (currentStep == 3)
+                    {
+                        <!-- Étape 4: Révision finale -->
+                        <div class="step-content step-review">
+                            <div class="step-header">
+                                <h2>
+                                    <i class="fas fa-check-circle"></i>
+                                    Révision finale
+                                </h2>
+                                <p>Vérifiez toutes les informations avant publication</p>
+                            </div>
+
+                            <div class="review-content">
+                                <div class="product-preview">
+                                    <div class="preview-images">
+                                        @if (selectedImages.Any())
+                                        {
+                                            <div class="main-image">
+                                                <img src="@selectedImages[0].DataUrl" alt="@productName" />
+                                            </div>
+                                            @if (selectedImages.Count > 1)
+                                            {
+                                                <div class="thumbnail-list">
+                                                    @for (int i = 1; i < Math.Min(selectedImages.Count, 4); i++)
+                                                    {
+                                                        <img src="@selectedImages[i].DataUrl" alt="Image @(i + 1)" />
+                                                    }
+                                                    @if (selectedImages.Count > 4)
+                                                    {
+                                                        <div class="more-images">+@(selectedImages.Count - 4)</div>
+                                                    }
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="no-image-placeholder">
+                                                <i class="fas fa-image"></i>
+                                                <span>Aucune image</span>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="preview-info">
+                                        <h3>@(productName ?? "Nom du produit")</h3>
+                                        <div class="preview-price">@(productPrice?.ToString("F2") ?? "0.00")€</div>
+                                        <p class="preview-description">@(productDescription ?? "Aucune description")</p>
+                                        <div class="preview-status">
+                                            <span class="status-badge @(isPublished ? "published" : "draft")">
+                                                @(isPublished ? "Publié" : "Brouillon")
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="review-sections">
+                                    <div class="review-section">
+                                        <h4><i class="fas fa-info-circle"></i> Informations</h4>
+                                        <div class="review-grid">
+                                            <div class="review-item">
+                                                <span>Nom:</span>
+                                                <strong>@(productName ?? "Non défini")</strong>
+                                            </div>
+                                            <div class="review-item">
+                                                <span>Description:</span>
+                                                <strong>@(string.IsNullOrEmpty(productDescription) ? "Non définie" : "✓ Définie")</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="review-section">
+                                        <h4><i class="fas fa-euro-sign"></i> Prix et publication</h4>
+                                        <div class="review-grid">
+                                            <div class="review-item">
+                                                <span>Prix:</span>
+                                                <strong>@(productPrice?.ToString("F2") ?? "0.00")€</strong>
+                                            </div>
+                                            <div class="review-item">
+                                                <span>Statut:</span>
+                                                <strong class="@(isPublished ? "text-success" : "text-warning")">
+                                                    @(isPublished ? "Sera publié" : "Restera en brouillon")
+                                                </strong>
+                                            </div>
+                                            <div class="review-item">
+                                                <span>Images:</span>
+                                                <strong>@selectedImages.Count image(s)</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Navigation Footer -->
+                <div class="step-navigation">
+                    <div class="nav-left">
+                        @if (currentStep > 0)
+                        {
+                            <button type="button" class="btn btn-outline" @onclick="PreviousStep" disabled="@isProcessing">
+                                <i class="fas fa-arrow-left"></i>
+                                Précédent
+                            </button>
+                        }
+                    </div>
+
+                    <div class="nav-center">
+                        <div class="step-indicator">
+                            Étape @(currentStep + 1) sur @steps.Count
+                        </div>
+                    </div>
+
+                    <div class="nav-right">
+                        @if (currentStep < steps.Count - 1)
+                        {
+                            <button type="button" class="btn btn-primary" @onclick="NextStep" disabled="@(!CanProceedToNext() || isProcessing)">
+                                Suivant
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-success btn-lg" @onclick="HandleSubmit" disabled="@(!CanSubmit() || isProcessing)">
+                                @if (isProcessing)
+                                {
+                                    <div class="spinner"></div>
+                                    <span>Création...</span>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-rocket"></i>
+                                    <span>Créer le produit</span>
+                                }
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Footer_Special></Footer_Special>
+
+@code {
+    // Classe pour gérer les images
+    public class ProductImage
+    {
+        public string DataUrl { get; set; } = string.Empty;
+        public string Base64Data { get; set; } = string.Empty;
+        public string ContentType { get; set; } = string.Empty;
+    }
+
+    // Étapes du processus
+    private List<CreationStep> steps = new()
+    {
+        new("Images", "Ajoutez vos photos", "fas fa-images"),
+        new("Informations", "Détails du produit", "fas fa-info-circle"),
+        new("Prix", "Tarification", "fas fa-euro-sign"),
+        new("Révision", "Validation finale", "fas fa-check-circle")
+    };
+
+    private int currentStep = 0;
+
+    // Variables du produit
+    private string productName = string.Empty;
+    private string productDescription = string.Empty;
+    private decimal? productPrice;
+    private bool isPublished = false;
+    private List<ProductImage> selectedImages = new();
+    private bool isProcessing = false;
+
+    // Messages
+    private string? errorMessage;
+    private string? successMessage;
+
+    public class CreationStep
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Icon { get; set; }
+
+        public CreationStep(string title, string description, string icon)
+        {
+            Title = title;
+            Description = description;
+            Icon = icon;
+        }
+    }
+
+    // Méthodes de navigation
+    private void NextStep()
+    {
+        if (currentStep < steps.Count - 1 && CanProceedToNext())
+        {
+            currentStep++;
+            ClearMessages();
+        }
+    }
+
+    private void PreviousStep()
+    {
+        if (currentStep > 0)
+        {
+            currentStep--;
+            ClearMessages();
+        }
+    }
+
+    private void GoToStep(int stepIndex)
+    {
+        if (stepIndex <= currentStep)
+        {
+            currentStep = stepIndex;
+            ClearMessages();
+        }
+    }
+
+    private bool CanProceedToNext()
+    {
+        return currentStep switch
+        {
+            0 => true, // Images optionnelles
+            1 => !string.IsNullOrWhiteSpace(productName) && !string.IsNullOrWhiteSpace(productDescription),
+            2 => productPrice.HasValue && productPrice > 0,
+            _ => true
+        };
+    }
+
+    private bool CanSubmit()
+    {
+        return !string.IsNullOrWhiteSpace(productName) &&
+               !string.IsNullOrWhiteSpace(productDescription) &&
+               productPrice.HasValue &&
+               productPrice > 0;
+    }
+
+    // Méthodes pour les images
+    private async Task HandleImageSelection(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles(8 - selectedImages.Count);
+
+        foreach (var file in files)
+        {
+            // Vérifier la taille (max 10MB)
+            if (file.Size > 10 * 1024 * 1024)
+            {
+                errorMessage = $"Fichier {file.Name} trop volumineux (max 10MB)";
+                continue;
+            }
+
+            // Vérifier le type de fichier
+            if (!file.ContentType.StartsWith("image/"))
+            {
+                errorMessage = $"Fichier {file.Name} n'est pas une image";
+                continue;
+            }
+
+            try
+            {
+                // Lire le fichier
+                var buffer = new byte[file.Size];
+                using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+                await stream.ReadAsync(buffer);
+
+                // Convertir en base64
+                var base64 = Convert.ToBase64String(buffer);
+                var dataUrl = $"data:{file.ContentType};base64,{base64}";
+
+                selectedImages.Add(new ProductImage
+                {
+                    DataUrl = dataUrl,
+                    Base64Data = base64,
+                    ContentType = file.ContentType
+                });
+
+                ClearMessages();
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"Erreur lors du traitement de {file.Name}: {ex.Message}";
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    private void RemoveImage(int index)
+    {
+        if (index >= 0 && index < selectedImages.Count)
+        {
+            selectedImages.RemoveAt(index);
+            StateHasChanged();
+        }
+    }
+
+    private void SetAsPrimary(int index)
+    {
+        if (index > 0 && index < selectedImages.Count)
+        {
+            var image = selectedImages[index];
+            selectedImages.RemoveAt(index);
+            selectedImages.Insert(0, image);
+            StateHasChanged();
+        }
+    }
+
+    // Méthode principale de soumission
+    private async Task HandleSubmit()
+    {
+        if (!CanSubmit())
+        {
+            errorMessage = "Veuillez remplir tous les champs requis";
+            return;
+        }
+
+        isProcessing = true;
+        ClearMessages();
+        StateHasChanged();
+
+        try
+        {
+            // Créer l'objet ProductCreateDto
+            var productDto = new ProductCreateDto
+            {
+                Nom = productName.Trim(),
+                Description = productDescription.Trim(),
+                Prix = productPrice!.Value,
+                IsPublished = isPublished,
+                ImageId = null, // Sera défini après la création de l'image
+                PlastiqueId = null,
+                CategorieId = null,
+                TagId = null,
+                StockId = null,
+                SeoId = null
+            };
+
+            // Créer le produit
+            var createdProduct = await ProductService.CreateProductAsync(productDto);
+
+            if (createdProduct != null)
+            {
+                successMessage = $"Produit '{createdProduct.Nom}' créé avec succès !";
+
+                // TODO: Gérer l'upload des images si vous avez un service d'image
+                // Si vous avez des images, vous devriez les sauvegarder et mettre à jour le produit
+                // avec l'ImageId correspondant
+
+                // Rediriger vers la liste des produits après un délai
+                await Task.Delay(2000);
+                Navigation.NavigateTo("/admin/products");
+            }
+            else
+            {
+                errorMessage = "Erreur lors de la création du produit. Veuillez réessayer.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erreur: {ex.Message}";
+        }
+        finally
+        {
+            isProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task SaveAsDraft()
+    {
+        if (string.IsNullOrWhiteSpace(productName))
+        {
+            errorMessage = "Le nom du produit est requis pour sauvegarder";
+            return;
+        }
+
+        isProcessing = true;
+        ClearMessages();
+        StateHasChanged();
+
+        try
+        {
+            var productDto = new ProductCreateDto
+            {
+                Nom = productName.Trim(),
+                Description = productDescription?.Trim() ?? "",
+                Prix = productPrice ?? 0,
+                IsPublished = false, // Forcer en brouillon
+                ImageId = null,
+                PlastiqueId = null,
+                CategorieId = null,
+                TagId = null,
+                StockId = null,
+                SeoId = null
+            };
+
+            var createdProduct = await ProductService.CreateProductAsync(productDto);
+
+            if (createdProduct != null)
+            {
+                successMessage = "Brouillon sauvegardé avec succès !";
+            }
+            else
+            {
+                errorMessage = "Erreur lors de la sauvegarde du brouillon";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erreur: {ex.Message}";
+        }
+        finally
+        {
+            isProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task PreviewProduct()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", "Aperçu du produit:", new
+        {
+            Name = productName,
+            Description = productDescription,
+            Price = productPrice,
+            IsPublished = isPublished,
+            ImagesCount = selectedImages.Count
+        });
+    }
+
+    private void ClearMessages()
+    {
+        errorMessage = null;
+        successMessage = null;
+    }
+}
