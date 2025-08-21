@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Rx3eMGXU+p8=",
+  "dgSpecHash": "WKrQimX0Ie0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj",
+  "projectFilePath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SnifL\\.nuget\\packages\\freesql\\3.5.212\\freesql.3.5.212.nupkg.sha512",
     "C:\\Users\\SnifL\\.nuget\\packages\\freesql.dbcontext\\3.5.212\\freesql.dbcontext.3.5.212.nupkg.sha512",

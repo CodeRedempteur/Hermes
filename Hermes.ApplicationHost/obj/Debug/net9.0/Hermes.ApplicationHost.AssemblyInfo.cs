@@ -18,15 +18,15 @@ using System.Reflection;
     "xt\\")]
 [assembly: System.Reflection.AssemblyMetadata("dcpbinpath", "C:\\Users\\SnifL\\.nuget\\packages\\aspire.hosting.orchestration.win-x64\\9.0.0\\tools\\e" +
     "xt\\bin\\")]
-[assembly: System.Reflection.AssemblyMetadata("apphostprojectpath", "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Appli" +
-    "cationHost")]
+[assembly: System.Reflection.AssemblyMetadata("apphostprojectpath", "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.ApplicationHo" +
+    "st")]
 [assembly: System.Reflection.AssemblyMetadata("apphostprojectname", "Hermes.ApplicationHost.csproj")]
 [assembly: System.Reflection.AssemblyMetadata("aspiredashboardpath", "C:\\Users\\SnifL\\.nuget\\packages\\aspire.dashboard.sdk.win-x64\\9.0.0\\tools\\Aspire.Da" +
     "shboard.exe")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hermes.ApplicationHost")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed2b92e61fa8ed4e1e473e11b549d5358a276733")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hermes.ApplicationHost")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hermes.ApplicationHost")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

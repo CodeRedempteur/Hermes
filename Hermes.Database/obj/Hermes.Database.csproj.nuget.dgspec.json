@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Database\\Hermes.Database.csproj": {}
+    "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\Hermes.Database.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Database\\Hermes.Database.csproj": {
+    "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\Hermes.Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Database\\Hermes.Database.csproj",
+        "projectUniqueName": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\Hermes.Database.csproj",
         "projectName": "Hermes.Database",
-        "projectPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Database\\Hermes.Database.csproj",
+        "projectPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\Hermes.Database.csproj",
         "packagesPath": "C:\\Users\\SnifL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Database\\obj\\",
+        "outputPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

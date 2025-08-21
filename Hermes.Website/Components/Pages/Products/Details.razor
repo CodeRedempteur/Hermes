@@ -1,0 +1,355 @@
+﻿@page "/details/{id}"
+@using Hermes.Website.Services
+@using Hermes.Data.Product.Models
+@inject ProductService ProductService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>@(product?.Nom ?? "Détails Produit") - Eternal Bears</PageTitle>
+
+<div class="product-details-container">
+    @if (isLoading)
+    {
+        <!-- Loading State -->
+        <div class="loading-container">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Chargement du produit...</span>
+            </div>
+        </div>
+    }
+    else if (product == null)
+    {
+        <!-- Product Not Found -->
+        <div class="not-found-container">
+            <div class="not-found-content">
+                <div class="not-found-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2>Produit introuvable</h2>
+                <p>Le produit que vous recherchez n'existe pas ou a été supprimé.</p>
+                <button class="btn btn-primary" @onclick="GoBack">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux produits
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Product Details -->
+        <div class="product-details-content">
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <button class="breadcrumb-item" @onclick="GoBack">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux produits
+                </button>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">@product.Nom</span>
+            </nav>
+
+            <!-- Product Main Content -->
+            <div class="product-main">
+
+                <!-- Product Image Gallery -->
+                <div class="product-gallery">
+                    <div class="main-image">
+                        @if (!string.IsNullOrEmpty(productImageSrc))
+                        {
+                            <img src="@productImageSrc"
+                                 alt="@product.Nom"
+                                 class="product-image"
+                                 @onload="OnImageLoad"
+                                 @onerror="OnImageError"
+                                 style="@(hasImageError ? "display: none;" : "")" />
+                        }
+
+                        <!-- Fallback Image -->
+                        <div class="image-fallback @(ShouldShowFallback() ? "show" : "")">
+                            <i class="fas fa-image"></i>
+                            <span>Image non disponible</span>
+                        </div>
+
+                        <!-- Image Zoom Button -->
+                        @if (!string.IsNullOrEmpty(productImageSrc) && !hasImageError)
+                        {
+                            <button class="zoom-btn" @onclick="OpenImageModal" title="Agrandir l'image">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Product Information -->
+                <div class="product-info">
+
+                    <!-- Product Header -->
+                    <div class="product-header">
+                        <div class="product-category">@GetCategoryDisplayName()</div>
+                        <h1 class="product-title">@product.Nom</h1>
+
+                        <!-- Product Badges -->
+                        <div class="product-badges">
+                            @if (IsNewProduct(product.CreatedAt))
+                            {
+                                <span class="product-badge new">Nouveau</span>
+                            }
+                            @if (IsLimitedEdition(product.Id))
+                            {
+                                <span class="product-badge limited">Édition limitée</span>
+                            }
+                            @if (!product.IsPublished)
+                            {
+                                <span class="product-badge unavailable">Épuisé</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Product Price -->
+                    <div class="product-pricing">
+                        <div class="current-price">@product.Prix.ToString("F0")€</div>
+                        <div class="price-info">Prix TTC, livraison en sus</div>
+                    </div>
+
+                    <!-- Product Description -->
+                    <div class="product-description">
+                        <h3>Description</h3>
+                        <p>@(string.IsNullOrEmpty(product.Description) ? "Description détaillée à venir pour cet adorable ours en peluche." : product.Description)</p>
+                    </div>
+
+                    <!-- Product Actions -->
+                    <div class="product-actions">
+                        @if (product.IsPublished)
+                        {
+                            <button class="btn btn-primary btn-large" @onclick="AddToCart">
+                                <i class="fas fa-shopping-cart"></i>
+                                Ajouter au panier
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-disabled btn-large" disabled>
+                                <i class="fas fa-times"></i>
+                                Produit épuisé
+                            </button>
+                        }
+
+                        <button class="btn btn-secondary" @onclick="AddToFavorites">
+                            <i class="fas fa-heart"></i>
+                            Ajouter aux favoris
+                        </button>
+                    </div>
+
+                    <!-- Product Meta Information -->
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Statut :</span>
+                            <span class="meta-value @(product.IsPublished ? "available" : "unavailable")">
+                                @(product.IsPublished ? "Disponible" : "Non publié")
+                            </span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Ajouté le :</span>
+                            <span class="meta-value">@product.CreatedAt.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("fr-FR"))</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Référence :</span>
+                            <span class="meta-value">EB-@product.Id.ToString("D4")</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Share -->
+                    <div class="product-share">
+                        <h4>Partager ce produit</h4>
+                        <div class="share-buttons">
+                            <button class="share-btn facebook" @onclick="ShareOnFacebook" title="Partager sur Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button class="share-btn twitter" @onclick="ShareOnTwitter" title="Partager sur Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn copy" @onclick="CopyLink" title="Copier le lien">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Image Modal -->
+@if (showImageModal)
+{
+    <div class="image-modal" @onclick="CloseImageModal">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <button class="modal-close" @onclick="CloseImageModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="@productImageSrc" alt="@product?.Nom" class="modal-image" />
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    private Product? product;
+    private string? productImageSrc;
+    private bool isLoading = true;
+    private bool hasImageError = false;
+    private bool showImageModal = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProduct();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(Id))
+        {
+            await LoadProduct();
+        }
+    }
+
+    private async Task LoadProduct()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            if (int.TryParse(Id, out var productId))
+            {
+                product = await ProductService.GetProductByIdAsync(productId);
+
+                if (product != null)
+                {
+                    await LoadProductImage();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du chargement du produit {Id}: {ex.Message}");
+            product = null;
+        }
+
+        isLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task LoadProductImage()
+    {
+        if (product?.ImageId.HasValue == true)
+        {
+            try
+            {
+                var productWithDetails = await ProductService.GetProductWithDetailsAsync(product.Id);
+                // TODO: Adapter selon votre structure d'image
+                // productImageSrc = $"data:image/jpeg;base64,{productWithDetails.Image?.ImageBase64}";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors du chargement de l'image: {ex.Message}");
+                hasImageError = true;
+            }
+        }
+    }
+
+    private bool ShouldShowFallback()
+    {
+        return string.IsNullOrEmpty(productImageSrc) || hasImageError;
+    }
+
+    private void OnImageLoad()
+    {
+        hasImageError = false;
+        StateHasChanged();
+    }
+
+    private void OnImageError()
+    {
+        hasImageError = true;
+        StateHasChanged();
+    }
+
+    private string GetCategoryDisplayName()
+    {
+        return "Ours en peluche"; // TODO: Implémenter selon votre logique de catégories
+    }
+
+    private bool IsNewProduct(DateTime createdAt)
+    {
+        return (DateTime.Now - createdAt).TotalDays <= 30;
+    }
+
+    private bool IsLimitedEdition(int productId)
+    {
+        return productId <= 10; // TODO: Adapter selon votre logique
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    private void AddToCart()
+    {
+        if (product != null && product.IsPublished)
+        {
+            Console.WriteLine($"Adding {product.Nom} to cart");
+            // TODO: Implémenter l'ajout au panier
+        }
+    }
+
+    private void AddToFavorites()
+    {
+        if (product != null)
+        {
+            Console.WriteLine($"Adding {product.Nom} to favorites");
+            // TODO: Implémenter l'ajout aux favoris
+        }
+    }
+
+    private void OpenImageModal()
+    {
+        showImageModal = true;
+        StateHasChanged();
+    }
+
+    private void CloseImageModal()
+    {
+        showImageModal = false;
+        StateHasChanged();
+    }
+
+    private async Task ShareOnFacebook()
+    {
+        var url = Navigation.Uri;
+        var facebookUrl = $"https://www.facebook.com/sharer/sharer.php?u={Uri.EscapeDataString(url)}";
+        await JSRuntime.InvokeVoidAsync("open", facebookUrl, "_blank");
+    }
+
+    private async Task ShareOnTwitter()
+    {
+        var url = Navigation.Uri;
+        var text = $"Découvrez {product?.Nom} chez Eternal Bears !";
+        var twitterUrl = $"https://twitter.com/intent/tweet?url={Uri.EscapeDataString(url)}&text={Uri.EscapeDataString(text)}";
+        await JSRuntime.InvokeVoidAsync("open", twitterUrl, "_blank");
+    }
+
+    private async Task CopyLink()
+    {
+        var url = Navigation.Uri;
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", url);
+        // TODO: Afficher une notification de succès
+        Console.WriteLine("Lien copié dans le presse-papiers");
+    }
+}

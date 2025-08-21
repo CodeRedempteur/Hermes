@@ -1,6 +1,7 @@
 ﻿@using Hermes.Website.Services
 @using Hermes.Data.Product.Models
 @inject ProductService ProductService
+@inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
 
 <PageTitle>Nos Créations - Eternal Bears</PageTitle>
@@ -45,26 +46,26 @@
                         <div class="product-card" @onclick="() => ViewProduct(product.Id)">
                             @* Product Image avec Fallback *@
                             <div class="product-image">
-                                    @{
-                                        string? imageSrc = null;
-                                        if (product.ImageId.HasValue && productImages.ContainsKey(product.ImageId.Value))
-                                        {
-                                            imageSrc = $"data:image/jpeg;base64,{productImages[product.ImageId.Value]}";
-                                        }
-                                    }
-
-                                    @if (!string.IsNullOrEmpty(imageSrc))
+                                @{
+                                    string? imageSrc = null;
+                                    if (product.ImageId.HasValue && productImages.ContainsKey(product.ImageId.Value))
                                     {
-                                        <img src="@imageSrc"
-                                             alt="@product.Nom"
-                                             loading="lazy"
-                                             style="@(GetImageErrorState(product.Id) ? "opacity: 0;" : "")"
-                                             @onload="@(() => OnImageLoad(product.Id))"
-                                             @onerror="@(() => OnImageError(product.Id))" />
+                                        imageSrc = $"data:image/jpeg;base64,{productImages[product.ImageId.Value]}";
                                     }
+                                }
 
-                                    <!-- Fallback avec icône simple -->
-                          
+                                @if (!string.IsNullOrEmpty(imageSrc))
+                                {
+                                    <img src="@imageSrc"
+                                         alt="@product.Nom"
+                                         loading="lazy"
+                                         style="@(GetImageErrorState(product.Id) ? "opacity: 0;" : "")"
+                                         @onload="@(() => OnImageLoad(product.Id))"
+                                         @onerror="@(() => OnImageError(product.Id))" />
+                                }
+
+                                <!-- Fallback avec icône simple -->
+
                                 <div class="image-fallback @(ShouldShowFallback(product.Id, imageSrc) ? "show" : "")">
                                     <i class="fas fa-image"></i>
                                 </div>
@@ -433,8 +434,6 @@
     }
     #endregion
 
-    // ... (rest of the existing methods remain the same)
-
     #region Filter and Search Methods
     private void ApplyFilters()
     {
@@ -563,9 +562,11 @@
     #endregion
 
     #region Action Methods
-    private void ViewProduct(int productId)
+    private async Task ViewProduct(int productId)
     {
-        Console.WriteLine($"Viewing product {productId}");
+        // Ouvrir la page de détails dans un nouvel onglet
+        var url = $"/details/{productId}";
+        await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
     private void AddToCart(int productId)

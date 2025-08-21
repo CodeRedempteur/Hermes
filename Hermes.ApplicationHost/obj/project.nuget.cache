@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mb5uvyQ0w2Q=",
+  "dgSpecHash": "2qNHdzTzIFs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
+  "projectFilePath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SnifL\\.nuget\\packages\\aspire.dashboard.sdk.win-x64\\9.0.0\\aspire.dashboard.sdk.win-x64.9.0.0.nupkg.sha512",
     "C:\\Users\\SnifL\\.nuget\\packages\\aspire.hosting\\9.0.0\\aspire.hosting.9.0.0.nupkg.sha512",

@@ -1,86 +1,110 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\",
+  "WorkspaceRootPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\products\\products_page.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\products\\products_page.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\products_page.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\products\\imagewithfallback.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\imagewithfallback.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\products\\imagewithfallback.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\imagewithfallback.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\products\\details.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\details.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\products\\products_filters.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\products_filters.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\hero_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\hero_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\secondarynavbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\secondarynavbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\js\\secondary-navbar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\js\\secondary-navbar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\secondarynavbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\secondarynavbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\navigation_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\navigation_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\navigation_special.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\navigation_special.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\product_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\product_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\process_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\process_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\navigation_special.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\navigation_special.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\products_filters.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\products_filters.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\imagewithfallback.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\imagewithfallback.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\navigation_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\navigation_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\footer_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\footer_special.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\wwwroot\\css\\product_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\process_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\process_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\secondarynavbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\secondarynavbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\products\\imagewithfallback.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\imagewithfallback.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\products\\products_filters.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\products_filters.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\hero_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\hero_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\js\\secondary-navbar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\js\\secondary-navbar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\secondarynavbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\secondarynavbar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\product_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\product_section.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\product_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\product_section.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\pages\\admin_products\\createproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\admin_products\\createproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\admin_products\\createproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes.website\\hermes.website\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -90,114 +114,79 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SecondaryNavbar.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T16:45:16.405Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Navigation_Special.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
-              "ViewState": "AgIAABUBAAAAAAAAAAAgwDYBAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T16:41:02.919Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Navigation_Special.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:41:10.092Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "SecondaryNavbar.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:43:47.787Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Hero_Section.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Hero_Section.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Hero_Section.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Hero_Section.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Hero_Section.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAVAAAAAAAAAA==",
+              "Title": "Process_Section.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Process_Section.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Process_Section.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Process_Section.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Process_Section.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T18:07:58.995Z",
+              "WhenOpened": "2025-08-21T22:17:48.685Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "secondary-navbar.js",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAAAGUAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-08-21T17:04:03.049Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ImageWithFallback.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
-              "ViewState": "AgIAAEYAAAAAAAAAAADwv2EAAAAFAAAAAAAAAA==",
+              "Title": "Details.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Details.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\Details.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Details.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\Details.css",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAQwFoAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T17:56:35.244Z",
+              "WhenOpened": "2025-08-21T22:14:06.26Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 15,
+              "Title": "Process_Section.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Process_Section.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Process_Section.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Process_Section.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Process_Section.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T22:10:23.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Navigation_Special.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Navigation_Special.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T16:41:10.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "Products_Filters.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
               "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
               "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\Products_Filters.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T17:44:45.763Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T17:44:45.763Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "ImageWithFallback.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\ImageWithFallback.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -206,13 +195,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Products_Page.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor*",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor*",
-              "ViewState": "AgIAACMAAAAAAAAAAAAvwEMAAAAmAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-08-21T16:59:29.514Z",
               "EditorCaption": ""
@@ -221,58 +210,200 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Products_Page.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
               "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
               "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\Products_Page.css",
-              "ViewState": "AgIAAPEDAAAAAAAAAADwvyAEAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAA4CAAAAAAAAAAAQwCUCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-08-21T16:54:46.518Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 7,
               "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Layout\\MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Layout\\MainLayout.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Layout\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Layout\\MainLayout.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:45:20.179Z"
+              "WhenOpened": "2025-08-21T16:45:20.179Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 9,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\_Imports.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\_Imports.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T16:52:46.854Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "App.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\App.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\App.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\App.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\App.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\App.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:52:41.931Z"
+              "WhenOpened": "2025-08-21T16:52:41.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Navigation_Special.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Navigation_Special.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYBAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-21T16:41:02.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\app.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\app.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\app.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\app.css",
+              "ViewState": "AgIAADIHAAAAAAAAAAAUwEkHAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-21T16:37:32.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "ViewState": "AgIAABQBAAAAAAAAAAAtwCsBAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T22:05:37.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Footer_Special.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Footer_Special.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Footer_Special.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Footer_Special.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Footer_Special.razor",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwBIAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T22:10:32.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Products_Filters.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Filters.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Products_Filters.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Filters.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Products_Filters.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T22:12:35.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ImageWithFallback.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\ImageWithFallback.css",
+              "ViewState": "AgIAAEYAAAAAAAAAAADwv2EAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-21T17:56:35.244Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "secondary-navbar.js",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\js\\secondary-navbar.js",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAGUAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-08-21T17:04:03.049Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 19,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\_Imports.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\_Imports.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\_Imports.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\_Imports.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:52:46.854Z"
+              "Title": "Hero_Section.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Hero_Section.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Hero_Section.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Hero_Section.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Hero_Section.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-21T18:07:58.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
+              "Title": "SecondaryNavbar.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\SecondaryNavbar.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T16:43:47.787Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T16:41:09.658Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "SecondaryNavbar.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
+              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
+              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\SecondaryNavbar.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-08-21T16:45:16.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
               "Title": "Routes.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Routes.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Routes.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Routes.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Routes.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\Routes.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -280,11 +411,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 22,
               "Title": "Product_Section.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Product_Section.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Product_Section.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Product_Section.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Product_Section.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Product_Section.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Product_Section.razor",
               "ViewState": "AgIAAHoAAAAAAAAAAAAowKcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -292,35 +423,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Home.razor",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAcwK8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T16:41:09.658Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "app.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\app.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\app.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\app.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\app.css",
-              "ViewState": "AgIAABsHAAAAAAAAAAAkwEkHAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-21T16:37:32.132Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 24,
               "Title": "CreateProduct.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
               "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
               "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -328,11 +435,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 23,
               "Title": "Product_Section.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Product_Section.css",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Product_Section.css",
               "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Product_Section.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.Website\\wwwroot\\css\\Product_Section.css",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Product_Section.css",
               "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Product_Section.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",

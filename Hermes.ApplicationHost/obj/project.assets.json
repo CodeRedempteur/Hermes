@@ -2907,11 +2907,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
+      "projectUniqueName": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
       "projectName": "Hermes.ApplicationHost",
-      "projectPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
+      "projectPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.ApplicationHost\\Hermes.ApplicationHost.csproj",
       "packagesPath": "C:\\Users\\SnifL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes.Website\\Hermes.ApplicationHost\\obj\\",
+      "outputPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.ApplicationHost\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
