@@ -1,9 +1,9 @@
-﻿@* SecondaryNavbar.razor - Version optimisée *@
+﻿@* SecondaryNavbar.razor - Version optimisée avec centrage PC *@
 
 <div class="secondary-navbar @(IsVisible ? "visible" : "")">
     <div class="secondary-nav-container">
 
-        <!-- Section Recherche (Grid Item 1) -->
+        <!-- Section Recherche -->
         <div class="search-section">
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
@@ -21,18 +21,20 @@
             </div>
         </div>
 
-        <!-- Section Filtres (Grid Item 2) -->
+        <!-- Section Filtres Selects -->
         <div class="filters-section">
             <!-- Filtre Catégorie -->
             <div class="filter-group">
                 <select class="filter-select"
                         @bind="SelectedCategory"
                         title="Filtrer par catégorie">
-                    <option value="">Catégories</option>
+                    <option value="">Toutes catégories</option>
                     <option value="peluches">Peluches</option>
                     <option value="figurines">Figurines</option>
                     <option value="accessoires">Accessoires</option>
                     <option value="collection">Collection</option>
+                    <option value="ours-classique">Ours Classique</option>
+                    <option value="ours-moderne">Ours Moderne</option>
                 </select>
             </div>
 
@@ -45,7 +47,8 @@
                     <option value="0-25">0€ - 25€</option>
                     <option value="25-50">25€ - 50€</option>
                     <option value="50-100">50€ - 100€</option>
-                    <option value="100+">100€+</option>
+                    <option value="100-200">100€ - 200€</option>
+                    <option value="200+">200€+</option>
                 </select>
             </div>
 
@@ -56,15 +59,16 @@
                         title="Trier les résultats">
                     <option value="name-asc">Nom A-Z</option>
                     <option value="name-desc">Nom Z-A</option>
-                    <option value="price-asc">Prix ↗</option>
-                    <option value="price-desc">Prix ↘</option>
+                    <option value="price-asc">Prix croissant</option>
+                    <option value="price-desc">Prix décroissant</option>
                     <option value="date-new">Plus récents</option>
                     <option value="date-old">Plus anciens</option>
+                    <option value="popular">Populaires</option>
                 </select>
             </div>
         </div>
 
-        <!-- Filtres Checkboxes (Grid Item 3) -->
+        <!-- Section Filtres Checkboxes -->
         <div class="checkbox-filters">
             <!-- Filtre Disponibilité -->
             <div class="filter-group">
@@ -91,9 +95,22 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Filtre Édition Limitée -->
+            <div class="filter-group">
+                <div class="checkbox-group">
+                    <input type="checkbox"
+                           id="limited-edition"
+                           class="custom-checkbox"
+                           @bind="ShowLimitedEdition" />
+                    <label for="limited-edition" class="checkbox-label">
+                        Édition limitée
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <!-- Section Vue (Grid Item 4) -->
+        <!-- Section Vue -->
         <div class="view-section">
             <div class="view-toggle">
                 <button class="view-btn @(ViewMode == "grid" ? "active" : "")"
@@ -109,7 +126,7 @@
             </div>
         </div>
 
-        <!-- Section Reset (Grid Item 5) -->
+        <!-- Section Reset -->
         <div class="reset-section">
             <button class="reset-btn" @onclick="ResetFilters" title="Réinitialiser tous les filtres">
                 <i class="fas fa-undo-alt"></i>
@@ -121,18 +138,21 @@
 </div>
 
 @code {
+    #region Parameters
     [Parameter] public bool IsVisible { get; set; } = true;
-
     [Parameter] public EventCallback<string> OnSearchChanged { get; set; }
     [Parameter] public EventCallback<string> OnCategoryChanged { get; set; }
     [Parameter] public EventCallback<string> OnPriceRangeChanged { get; set; }
     [Parameter] public EventCallback<string> OnSortChanged { get; set; }
     [Parameter] public EventCallback<bool> OnAvailabilityChanged { get; set; }
     [Parameter] public EventCallback<bool> OnNewItemsChanged { get; set; }
+    [Parameter] public EventCallback<bool> OnLimitedEditionChanged { get; set; }
     [Parameter] public EventCallback<string> OnViewModeChanged { get; set; }
     [Parameter] public EventCallback OnFiltersReset { get; set; }
+    #endregion
 
-    // Champs + propriétés avec callbacks dans les setters
+    #region Private Fields and Properties
+    // Recherche
     private string _searchTerm = "";
     private string SearchTerm
     {
@@ -145,6 +165,7 @@
         }
     }
 
+    // Catégorie
     private string _selectedCategory = "";
     private string SelectedCategory
     {
@@ -157,6 +178,7 @@
         }
     }
 
+    // Prix
     private string _selectedPriceRange = "";
     private string SelectedPriceRange
     {
@@ -169,6 +191,7 @@
         }
     }
 
+    // Tri
     private string _sortBy = "name-asc";
     private string SortBy
     {
@@ -181,6 +204,7 @@
         }
     }
 
+    // Disponibilité
     private bool _showAvailableOnly = false;
     private bool ShowAvailableOnly
     {
@@ -193,6 +217,7 @@
         }
     }
 
+    // Nouveautés
     private bool _showNewOnly = false;
     private bool ShowNewOnly
     {
@@ -205,6 +230,20 @@
         }
     }
 
+    // Édition limitée
+    private bool _showLimitedEdition = false;
+    private bool ShowLimitedEdition
+    {
+        get => _showLimitedEdition;
+        set
+        {
+            if (_showLimitedEdition == value) return;
+            _showLimitedEdition = value;
+            _ = OnLimitedEditionChanged.InvokeAsync(_showLimitedEdition);
+        }
+    }
+
+    // Mode d'affichage
     private string _viewMode = "grid";
     private string ViewMode
     {
@@ -216,7 +255,9 @@
             _ = OnViewModeChanged.InvokeAsync(_viewMode);
         }
     }
+    #endregion
 
+    #region Methods
     private void SetViewMode(string mode)
     {
         ViewMode = mode; // Le setter déclenche déjà OnViewModeChanged
@@ -236,6 +277,7 @@
         SortBy = "name-asc";
         ShowAvailableOnly = false;
         ShowNewOnly = false;
+        ShowLimitedEdition = false;
         ViewMode = "grid";
 
         if (OnFiltersReset.HasDelegate)
@@ -243,4 +285,5 @@
             await OnFiltersReset.InvokeAsync();
         }
     }
+    #endregion
 }

@@ -22,7 +22,7 @@ builder.Services.AddScoped<ApiService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
-
+builder.Services.AddScoped<ICartService, CartService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

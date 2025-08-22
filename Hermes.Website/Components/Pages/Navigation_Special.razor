@@ -1,6 +1,8 @@
-﻿
+﻿@rendermode InteractiveServer
+
+
 <header>
-    <div class="container header-container" >
+    <div class="container header-container">
         <div class="logo">
             <i class="fas fa-cube"></i>
             <h1>Eternal Bears</h1>
@@ -11,7 +13,21 @@
                 <li><a href="#products">Créations</a></li>
                 <li><a href="#process">Processus</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li class="nav-separator"></li>
+                <li class="cart-nav-item">
+                    <a href="/cart" class="cart-link" title="Mon Panier">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">3</span>
+                    </a>
+                </li>
             </ul>
         </nav>
+
+        <!-- Menu burger pour mobile -->
+        <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 </header>

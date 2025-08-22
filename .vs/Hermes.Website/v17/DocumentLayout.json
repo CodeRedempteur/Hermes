@@ -3,72 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\imageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\imageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\products\\details.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\products\\details.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\products_page.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\admin_products\\createproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\admin_products\\createproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\cart.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\cart.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\pages\\products\\details.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\productimageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\productimageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\wwwroot\\css\\admin_products\\createproducts.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\wwwroot\\css\\admin_products\\createproducts.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.coreserviceapi\\dbcontext\\productwebsitecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|solutionrelative:hermes.coreserviceapi\\dbcontext\\productwebsitecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.coreserviceapi\\controller\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|solutionrelative:hermes.coreserviceapi\\controller\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.data.product\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|solutionrelative:hermes.data.product\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}|Hermes.Database\\Hermes.Database.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.database\\createdatabase.psql||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{F08C370F-CE5C-4AA5-9BC7-9ADD39482C80}|Hermes.Database\\Hermes.Database.csproj|solutionrelative:hermes.database\\createdatabase.psql||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.data.product\\models\\imageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|solutionrelative:hermes.data.product\\models\\imageproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.data.product\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F12DACE-2F65-4A13-B3C7-4A4664D36C2F}|Hermes.Data.Product\\Hermes.Data.Product.csproj|solutionrelative:hermes.data.product\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.coreserviceapi\\controller\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FDA4F0DD-E00C-1FBC-DEE6-7D0E15127DE6}|Hermes.CoreServiceAPI\\Hermes.CoreServiceAPI.csproj|solutionrelative:hermes.coreserviceapi\\controller\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|c:\\users\\snifl\\documents\\projetinformatique\\r_project\\hermes\\hermes.website\\components\\service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B46D02E-84B2-482C-B758-24D5CED6B528}|Hermes.Website\\Hermes.Website.csproj|solutionrelative:hermes.website\\components\\service\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,89 +34,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Details.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Details.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Products\\Details.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Products\\Details.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Products\\Details.css",
-              "ViewState": "AgIAAFgDAAAAAAAAAADwv4cDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-22T09:55:03.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Details.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Details.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor*",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Details.razor*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-22T09:54:36.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Products_Page.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Products_Page.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-22T09:52:21.549Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProductService.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductService.cs",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ProductService.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductService.cs",
-              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ProductService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:45:48.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CreateProducts.css",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Admin_Products\\CreateProducts.css",
-              "RelativeDocumentMoniker": "Hermes.Website\\wwwroot\\css\\Admin_Products\\CreateProducts.css",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\wwwroot\\css\\Admin_Products\\CreateProducts.css",
-              "RelativeToolTip": "Hermes.Website\\wwwroot\\css\\Admin_Products\\CreateProducts.css",
-              "ViewState": "AgIAAD8GAAAAAAAAAAAQwFYGAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-22T09:32:46.797Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CreateDatabase.psql",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\CreateDatabase.psql",
-              "RelativeDocumentMoniker": "Hermes.Database\\CreateDatabase.psql",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Database\\CreateDatabase.psql",
-              "RelativeToolTip": "Hermes.Database\\CreateDatabase.psql",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAgwHgAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002897|",
-              "WhenOpened": "2025-08-22T09:29:07.809Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Program.cs",
               "RelativeDocumentMoniker": "Hermes.Website\\Program.cs",
@@ -168,137 +46,72 @@
               "RelativeToolTip": "Hermes.Website\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:28:48.365Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ImagesController.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\Controller\\ImagesController.cs",
-              "RelativeDocumentMoniker": "Hermes.CoreServiceAPI\\Controller\\ImagesController.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\Controller\\ImagesController.cs",
-              "RelativeToolTip": "Hermes.CoreServiceAPI\\Controller\\ImagesController.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAswIgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:28:11.272Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProductImageService.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductImageService.cs",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ProductImageService.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductImageService.cs",
-              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ProductImageService.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAcwIIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:26:50.424Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ProductImage.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\ProductImage.cs",
-              "RelativeDocumentMoniker": "Hermes.Data.Product\\Models\\ProductImage.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\ProductImage.cs",
-              "RelativeToolTip": "Hermes.Data.Product\\Models\\ProductImage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:26:18.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ImageProduct.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\ImageProduct.cs",
-              "RelativeDocumentMoniker": "Hermes.Data.Product\\Models\\ImageProduct.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\ImageProduct.cs",
-              "RelativeToolTip": "Hermes.Data.Product\\Models\\ImageProduct.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:25:44.836Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Product.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\Product.cs",
-              "RelativeDocumentMoniker": "Hermes.Data.Product\\Models\\Product.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Data.Product\\Models\\Product.cs",
-              "RelativeToolTip": "Hermes.Data.Product\\Models\\Product.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:25:40.092Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ImageService.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ImageService.cs",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ImageService.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ImageService.cs",
-              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ImageService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:20:23.057Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ApiService.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ApiService.cs",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ApiService.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ApiService.cs",
-              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ApiService.cs",
-              "ViewState": "AgIAAEEBAAAAAAAAAAAswG4BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:20:19.378Z",
+              "WhenOpened": "2025-08-22T18:39:17.881Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "CreateProduct.razor",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
-              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
-              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Admin_Products\\CreateProduct.razor",
-              "ViewState": "AgIAABMDAAAAAAAAAAAEwCoDAAAkAAAAAAAAAA==",
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductService.cs",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ProductService.cs",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductService.cs",
+              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ProductService.cs",
+              "ViewState": "AgIAABoBAAAAAAAAAAAcwEgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T17:13:05.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductImageService.cs",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductImageService.cs",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\ProductImageService.cs",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\ProductImageService.cs",
+              "RelativeToolTip": "Hermes.Website\\Components\\Service\\ProductImageService.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAcwIIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T17:13:01.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Cart.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Cart.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Cart.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Cart.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Cart.razor",
+              "ViewState": "AgIAAOYBAAAAAAAAAAAswBMCAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-22T09:19:49.146Z",
+              "WhenOpened": "2025-08-22T17:12:27.928Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ProductsController.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\Controller\\ProductsController.cs",
-              "RelativeDocumentMoniker": "Hermes.CoreServiceAPI\\Controller\\ProductsController.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\Controller\\ProductsController.cs",
-              "RelativeToolTip": "Hermes.CoreServiceAPI\\Controller\\ProductsController.cs",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAswNIAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\CartService.cs",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Service\\CartService.cs",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Service\\CartService.cs*",
+              "RelativeToolTip": "Hermes.Website\\Components\\Service\\CartService.cs*",
+              "ViewState": "AgIAAB0BAAAAAAAAAAAswEoBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:18:10.677Z",
+              "WhenOpened": "2025-08-22T17:05:37.435Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ProductWebsiteContext.cs",
-              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\DbContext\\ProductWebsiteContext.cs",
-              "RelativeDocumentMoniker": "Hermes.CoreServiceAPI\\DbContext\\ProductWebsiteContext.cs",
-              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.CoreServiceAPI\\DbContext\\ProductWebsiteContext.cs",
-              "RelativeToolTip": "Hermes.CoreServiceAPI\\DbContext\\ProductWebsiteContext.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAvwEcAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-22T09:18:06.503Z",
+              "DocumentIndex": 3,
+              "Title": "Details.razor",
+              "DocumentMoniker": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "RelativeDocumentMoniker": "Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "ToolTip": "C:\\Users\\SnifL\\Documents\\ProjetInformatique\\R_Project\\Hermes\\Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "RelativeToolTip": "Hermes.Website\\Components\\Pages\\Products\\Details.razor",
+              "ViewState": "AgIAAAoCAAAAAAAAAAAowDcCAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-22T17:05:11.427Z",
               "EditorCaption": ""
             }
           ]

@@ -1,0 +1,905 @@
+﻿@page "/Cart"
+@using Hermes.Website.Services
+@using Hermes.Website.Components.Service
+
+@using Hermes.Data.Product.Models
+@inject ICartService CartService
+@inject ProductService ProductService
+@inject IProductImageService ProductImageService
+@inject IImageService ImageService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+@implements IDisposable
+
+<PageTitle>Mon Panier - Eternal Bears</PageTitle>
+<div class="topPage" id="topPage"></div>
+
+<div class="cart-container" id="cart">
+    <div class="container">
+        @* Header Section *@
+        <div class="cart-header">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1 class="cart-title">
+                        <i class="fas fa-shopping-cart"></i>
+                        Mon Panier
+                    </h1>
+                    <p class="cart-subtitle">@cartItems.Count article@(cartItems.Count > 1 ? "s" : "") dans votre panier</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" @onclick="ContinueShopping">
+                        <i class="fas fa-arrow-left"></i>
+                        Continuer mes achats
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        @if (isLoading)
+        {
+            @* Loading State *@
+            <div class="loading-container">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Chargement du panier...</span>
+                </div>
+            </div>
+        }
+        else if (!cartItems.Any())
+        {
+            @* Empty Cart State *@
+            <div class="empty-cart">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>Votre panier est vide</h3>
+                <p>Découvrez notre collection d'ours en peluche uniques et ajoutez vos favoris !</p>
+                <button class="btn btn-primary" @onclick="ContinueShopping">
+                    <i class="fas fa-search"></i>
+                    Découvrir nos créations
+                </button>
+            </div>
+        }
+        else
+        {
+            @* Cart Content *@
+            <div class="cart-content">
+                @* Cart Items Section *@
+                <div class="cart-items-section">
+                    <div class="section-header">
+                        <h2>Articles sélectionnés</h2>
+                        <div class="bulk-actions">
+                            <button class="bulk-action-btn" @onclick="SelectAllItems" title="@(allItemsSelected ? "Désélectionner tout" : "Tout sélectionner")">
+                                <i class="fas @(allItemsSelected ? "fa-check-square" : "fa-square")"></i>
+                                @(allItemsSelected ? "Désélectionner tout" : "Tout sélectionner")
+                            </button>
+                            <button class="bulk-action-btn danger" @onclick="RemoveSelectedItems" disabled="@(!HasSelectedItems() || isBulkRemoving)">
+                                @if (isBulkRemoving)
+                                {
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-trash"></i>
+                                }
+                                Supprimer sélectionnés
+                            </button>
+                            <button class="bulk-action-btn danger" @onclick="ClearAllCart" disabled="@isClearingCart">
+                                @if (isClearingCart)
+                                {
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-trash-alt"></i>
+                                }
+                                Vider le panier
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cart-items-list">
+                        @foreach (var item in cartItems)
+                        {
+                            <div class="cart-item @(item.IsSelected ? "selected" : "") @(removingItemIds.Contains(item.ProductId) ? "removing" : "")" @key="item.ProductId">
+                                @* Selection Checkbox *@
+                                <div class="item-selection">
+                                    <input type="checkbox"
+                                           id="item-@item.ProductId"
+                                           checked="@item.IsSelected"
+                                           @onchange="@(e => OnItemSelectionChanged(item, e))"
+                                           class="selection-checkbox"
+                                           disabled="@(removingItemIds.Contains(item.ProductId))" />
+                                    <label for="item-@item.ProductId" class="checkbox-label"></label>
+                                </div>
+
+                                @* Product Image *@
+                                <div class="item-image" @onclick="() => ViewProduct(item.ProductId)">
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="@item.ImageUrl" alt="@item.ProductName" loading="lazy" />
+                                    }
+                                    else
+                                    {
+                                        <div class="image-fallback">
+                                            <i class="fas fa-image"></i>
+                                        </div>
+                                    }
+
+                                    @* Overlay pour voir le produit *@
+                                    <div class="image-overlay">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                </div>
+
+                                @* Product Info *@
+                                <div class="item-info">
+                                    <h3 class="item-name" @onclick="() => ViewProduct(item.ProductId)">@item.ProductName</h3>
+                                    <p class="item-description">Ours en peluche unique et adorable</p>
+                                    <div class="item-meta">
+                                        <span class="item-category">@GetCategoryDisplayName()</span>
+                                        <span class="item-status available">Disponible</span>
+                                        <span class="item-reference">Réf: EB-@item.ProductId.ToString("D4")</span>
+                                    </div>
+                                    <div class="item-dates">
+                                        <small class="text-muted">Ajouté le @item.AddedAt.ToString("dd/MM/yyyy à HH:mm")</small>
+                                    </div>
+                                </div>
+
+                                @* Quantity Controls *@
+                                <div class="item-quantity">
+                                    <label class="quantity-label">Quantité</label>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn"
+                                                @onclick="() => DecreaseQuantity(item)"
+                                                disabled="@(item.Quantity <= 1 || updatingQuantityIds.Contains(item.ProductId) || removingItemIds.Contains(item.ProductId))">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number"
+                                               value="@item.Quantity"
+                                               @onchange="@(async (e) => await OnQuantityInputChanged(item, e.Value?.ToString()))"
+                                               class="quantity-input"
+                                               min="1"
+                                               max="10"
+                                               disabled="@(updatingQuantityIds.Contains(item.ProductId) || removingItemIds.Contains(item.ProductId))" />
+                                        <button class="quantity-btn"
+                                                @onclick="() => IncreaseQuantity(item)"
+                                                disabled="@(item.Quantity >= 10 || updatingQuantityIds.Contains(item.ProductId) || removingItemIds.Contains(item.ProductId))">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    @if (updatingQuantityIds.Contains(item.ProductId))
+                                    {
+                                        <div class="quantity-updating">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            <span>Mise à jour...</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                @* Price *@
+                                <div class="item-price">
+                                    <div class="unit-price">@item.Price.ToString("F0")€ / unité</div>
+                                    <div class="total-price">@item.TotalPrice.ToString("F0")€</div>
+                                </div>
+
+                                @* Actions *@
+                                <div class="item-actions">
+                                    <button class="action-btn"
+                                            @onclick="() => AddToFavorites(item.ProductId)"
+                                            title="Ajouter aux favoris"
+                                            disabled="@removingItemIds.Contains(item.ProductId)">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    <button class="action-btn danger"
+                                            @onclick="() => RemoveFromCart(item.ProductId)"
+                                            title="Supprimer du panier"
+                                            disabled="@removingItemIds.Contains(item.ProductId)">
+                                        @if (removingItemIds.Contains(item.ProductId))
+                                        {
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-trash"></i>
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @* Cart Summary Section *@
+                <div class="cart-summary-section">
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <h3>Récapitulatif de commande</h3>
+                            <div class="selected-items-indicator">
+                                @GetSelectedItemCount() / @cartItems.Count articles sélectionnés
+                            </div>
+                        </div>
+
+                        <div class="summary-content">
+                            @* Selected Items List *@
+                            <div class="selected-items-list">
+                                @foreach (var item in GetSelectedItems())
+                                {
+                                    <div class="summary-item">
+                                        <span class="summary-item-name">@item.ProductName @if(item.Quantity > 1){
+                                        <small>(x@item.Quantity)</small>
+                                    }
+    </span>
+                                    <span class="summary-item-price">@item.TotalPrice.ToString("F0")€</span>
+                                </div>
+                            }
+                        </div>
+
+                        @* Price Breakdown *@
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span>Sous-total (@GetSelectedItemCount() articles)</span>
+                                <span>@GetSubtotal().ToString("F0")€</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Livraison</span>
+                                <span class="shipping-price">@(GetSubtotal() >= 50 ? "Gratuite" : "5€")</span>
+                            </div>
+                            @if (GetSubtotal() >= 50)
+                            {
+                                <div class="price-row savings">
+                                    <span><i class="fas fa-gift"></i> Livraison gratuite économisée</span>
+                                    <span>-5€</span>
+                                </div>
+                            }
+
+                            <div class="price-divider"></div>
+                            <div class="price-row total">
+                                <span>Total</span>
+                                <span>@GetTotal().ToString("F0")€</span>
+                            </div>
+                        </div>
+
+                        @* Promo Code Section *@
+                        <div class="promo-section">
+                            <div class="promo-input-container">
+                                <input type="text" @bind="promoCode" placeholder="Code promo" class="promo-input" disabled="@isApplyingPromo" />
+                                <button class="promo-btn" @onclick="ApplyPromoCode" disabled="@(string.IsNullOrEmpty(promoCode) || isApplyingPromo)">
+                                    @if (isApplyingPromo)
+                                    {
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <span>Validation...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Appliquer</span>
+                                    }
+                                </button>
+                            </div>
+                            @if (!string.IsNullOrEmpty(appliedPromoMessage))
+                            {
+                                <div class="promo-message @(promoSuccess ? "success" : "error")">
+                                    <i class="fas @(promoSuccess ? "fa-check-circle" : "fa-exclamation-circle")"></i>
+                                    @appliedPromoMessage
+                                </div>
+                            }
+                        </div>
+
+                        @* Free Shipping Progress *@
+                        @if (GetSubtotal() < 50 && GetSubtotal() > 0)
+                        {
+                            <div class="shipping-progress">
+                                <div class="progress-header">
+                                    <i class="fas fa-truck"></i>
+                                    <span>Plus que @((50 - GetSubtotal()).ToString("F0"))€ pour la livraison gratuite !</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: @((GetSubtotal() / 50 * 100).ToString("F0"))%"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @* Action Buttons *@
+                    <div class="summary-actions">
+                        <button class="btn btn-primary checkout-btn"
+                                @onclick="ProceedToCheckout"
+                                disabled="@(!HasSelectedItems() || isProcessingCheckout)">
+                            @if (isProcessingCheckout)
+                            {
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Traitement...</span>
+                            }
+                            else
+                            {
+                                <i class="fas fa-credit-card"></i>
+                                <span>Procéder au paiement (@GetTotal().ToString("F0")€)</span>
+                            }
+                        </button>
+                        <button class="btn-secondary save-for-later-btn" @onclick="SaveForLater" disabled="@isProcessingCheckout">
+                            <i class="fas fa-bookmark"></i>
+                            Sauvegarder pour plus tard
+                        </button>
+                    </div>
+
+                    @* Security & Trust Indicators *@
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-undo"></i>
+                            <span>Retour gratuit 30j</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-truck"></i>
+                            <span>Livraison rapide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                }
+    </div>
+</div>
+
+@* Notification Toast *@
+@if (!string.IsNullOrEmpty(notificationMessage))
+{
+    <div class="notification-toast @notificationClass">
+        <div class="toast-content">
+            <i class="fas @notificationIcon"></i>
+            <span>@notificationMessage</span>
+        </div>
+        <button class="toast-close" @onclick="DismissNotification">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+}
+
+@code {
+    #region Models Extension
+    public class ExtendedCartItem
+    {
+        // Données du localStorage
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public DateTime AddedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
+        // Données récupérées via API
+        public string ProductName { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public string? ImageUrl { get; set; }
+
+        // État UI
+        public bool IsSelected { get; set; } = true;
+
+        // Propriété calculée
+        public decimal TotalPrice => Price * Quantity;
+    }
+    #endregion
+
+    #region State Variables
+    private List<ExtendedCartItem> cartItems = new();
+    private bool isLoading = true;
+    private bool allItemsSelected = true;
+
+    // Loading states
+    private HashSet<int> updatingQuantityIds = new();
+    private HashSet<int> removingItemIds = new();
+    private bool isBulkRemoving = false;
+    private bool isClearingCart = false;
+    private bool isApplyingPromo = false;
+    private bool isProcessingCheckout = false;
+
+    // Promo code variables
+    private string promoCode = string.Empty;
+    private string appliedPromoMessage = string.Empty;
+    private bool promoSuccess = false;
+    private decimal promoDiscount = 0;
+    private string appliedPromoCode = string.Empty;
+
+    // Notification variables
+    private string notificationMessage = string.Empty;
+    private string notificationClass = string.Empty;
+    private string notificationIcon = string.Empty;
+    #endregion
+
+    #region Lifecycle Methods
+    protected override async Task OnInitializedAsync()
+    {
+        // Ne pas charger le panier ici pendant le prerendering
+        CartService.OnCartChanged += HandleCartChanged;
+    }
+
+    private async void HandleCartChanged()
+    {
+        await LoadCartItems();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        CartService.OnCartChanged -= HandleCartChanged;
+    }
+    #endregion
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Charger le panier seulement après le premier rendu côté client
+            await LoadCartItems();
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+    #region Data Loading Methods
+    private async Task LoadCartItems()
+    {
+        try
+        {
+            Console.WriteLine("Début du chargement des items du panier...");
+
+            // Récupérer les données simplifiées du localStorage
+            var simpleCartItems = await CartService.GetCartItemsAsync();
+
+            Console.WriteLine($"Items récupérés du localStorage: {simpleCartItems.Count}");
+
+            // Preserve selection state for existing items
+            var previousSelections = cartItems.ToDictionary(x => x.ProductId, x => x.IsSelected);
+
+            cartItems = new List<ExtendedCartItem>();
+
+            // Pour chaque item du panier, récupérer les infos via l'API
+            foreach (var simpleItem in simpleCartItems)
+            {
+                try
+                {
+                    Console.WriteLine($"Récupération des infos pour le produit {simpleItem.ProductId}...");
+
+                    var product = await ProductService.GetProductByIdAsync(simpleItem.ProductId);
+                    if (product != null)
+                    {
+                        Console.WriteLine($"Produit trouvé: {product.Nom} - {product.Prix}€");
+
+                        // Récupérer la première image du produit
+                        string? imageUrl = null;
+                        try
+                        {
+                            var productImages = await ProductImageService.GetProductImagesAsync(product.Id);
+                            var firstImage = productImages.FirstOrDefault();
+                            if (firstImage != null)
+                            {
+                                imageUrl = ImageService.GetDisplayUrl(firstImage.ImageBase64);
+                                Console.WriteLine($"Image trouvée pour le produit {product.Id}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Aucune image trouvée pour le produit {product.Id}");
+                            }
+                        }
+                        catch (Exception imgEx)
+                        {
+                            Console.WriteLine($"Erreur lors de la récupération de l'image pour le produit {product.Id}: {imgEx.Message}");
+                        }
+
+                        var extendedItem = new ExtendedCartItem
+                        {
+                            // Données du localStorage
+                            ProductId = simpleItem.ProductId,
+                            Quantity = simpleItem.Quantity,
+                            AddedAt = simpleItem.AddedAt,
+                            UpdatedAt = simpleItem.UpdatedAt,
+
+                            // Données de l'API
+                            ProductName = product.Nom,
+                            Price = product.Prix,
+                            ImageUrl = imageUrl,
+
+                            // État UI
+                            IsSelected = previousSelections.ContainsKey(simpleItem.ProductId) ? previousSelections[simpleItem.ProductId] : true
+                        };
+
+                        cartItems.Add(extendedItem);
+                        Console.WriteLine($"Item ajouté au panier: {extendedItem.ProductName}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Produit {simpleItem.ProductId} non trouvé en base de données");
+                        // Optionnel: supprimer l'item du localStorage s'il n'existe plus
+                        await CartService.RemoveFromCartAsync(simpleItem.ProductId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur lors de la récupération du produit {simpleItem.ProductId}: {ex.Message}");
+                    // On continue avec les autres produits même si un produit échoue
+                }
+            }
+
+            UpdateSelectionState();
+            Console.WriteLine($"Chargement terminé - {cartItems.Count} items dans le panier");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du chargement du panier: {ex.Message}");
+            ShowNotification("Erreur lors du chargement du panier", "error");
+            cartItems = new List<ExtendedCartItem>();
+        }
+    }
+    #endregion
+
+    #region Cart Management Methods
+    private int GetSelectedItemCount() => cartItems.Count(i => i.IsSelected);
+    private bool HasSelectedItems() => cartItems.Any(i => i.IsSelected);
+    private List<ExtendedCartItem> GetSelectedItems() => cartItems.Where(i => i.IsSelected).ToList();
+
+    private decimal GetSubtotal()
+    {
+        return cartItems.Where(i => i.IsSelected).Sum(i => i.Price * i.Quantity);
+    }
+
+    private decimal GetShippingCost()
+    {
+        var subtotal = GetSubtotal();
+        return subtotal >= 50 ? 0 : 5;
+    }
+
+    private decimal GetTotal()
+    {
+        return GetSubtotal() + GetShippingCost() - promoDiscount;
+    }
+
+    private void UpdateSelectionState()
+    {
+        if (cartItems.Any())
+        {
+            allItemsSelected = cartItems.All(i => i.IsSelected);
+        }
+        else
+        {
+            allItemsSelected = false;
+        }
+    }
+
+    private void SelectAllItems()
+    {
+        allItemsSelected = !allItemsSelected;
+        foreach (var item in cartItems)
+        {
+            item.IsSelected = allItemsSelected;
+        }
+        StateHasChanged();
+    }
+
+    private void OnItemSelectionChanged(ExtendedCartItem item, ChangeEventArgs e)
+    {
+        item.IsSelected = (bool)e.Value;
+        UpdateSelectionState();
+    }
+
+    private async Task IncreaseQuantity(ExtendedCartItem item)
+    {
+        if (item.Quantity >= 10 || updatingQuantityIds.Contains(item.ProductId)) return;
+
+        try
+        {
+            updatingQuantityIds.Add(item.ProductId);
+            StateHasChanged();
+
+            await CartService.UpdateQuantityAsync(item.ProductId, item.Quantity + 1);
+            item.Quantity++;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de l'augmentation de la quantité: {ex.Message}");
+            ShowNotification("Erreur lors de la mise à jour de la quantité", "error");
+        }
+        finally
+        {
+            updatingQuantityIds.Remove(item.ProductId);
+            StateHasChanged();
+        }
+    }
+
+    private async Task DecreaseQuantity(ExtendedCartItem item)
+    {
+        if (item.Quantity <= 1 || updatingQuantityIds.Contains(item.ProductId)) return;
+
+        try
+        {
+            updatingQuantityIds.Add(item.ProductId);
+            StateHasChanged();
+
+            await CartService.UpdateQuantityAsync(item.ProductId, item.Quantity - 1);
+            item.Quantity--;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la diminution de la quantité: {ex.Message}");
+            ShowNotification("Erreur lors de la mise à jour de la quantité", "error");
+        }
+        finally
+        {
+            updatingQuantityIds.Remove(item.ProductId);
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnQuantityInputChanged(ExtendedCartItem item, string? newValue)
+    {
+        if (updatingQuantityIds.Contains(item.ProductId) || string.IsNullOrEmpty(newValue)) return;
+
+        if (int.TryParse(newValue, out int quantity))
+        {
+            if (quantity < 1) quantity = 1;
+            if (quantity > 10) quantity = 10;
+
+            if (quantity != item.Quantity)
+            {
+                try
+                {
+                    updatingQuantityIds.Add(item.ProductId);
+                    StateHasChanged();
+
+                    await CartService.UpdateQuantityAsync(item.ProductId, quantity);
+                    item.Quantity = quantity;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur lors de la mise à jour de la quantité: {ex.Message}");
+                    ShowNotification("Erreur lors de la mise à jour de la quantité", "error");
+                }
+                finally
+                {
+                    updatingQuantityIds.Remove(item.ProductId);
+                    StateHasChanged();
+                }
+            }
+        }
+    }
+
+    private async Task RemoveFromCart(int productId)
+    {
+        if (removingItemIds.Contains(productId)) return;
+
+        try
+        {
+            removingItemIds.Add(productId);
+            StateHasChanged();
+
+            var item = cartItems.FirstOrDefault(i => i.ProductId == productId);
+            if (item != null)
+            {
+                await CartService.RemoveFromCartAsync(productId);
+                cartItems.Remove(item);
+                UpdateSelectionState();
+                ShowNotification($"{item.ProductName} supprimé du panier", "success");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la suppression: {ex.Message}");
+            ShowNotification("Erreur lors de la suppression", "error");
+        }
+        finally
+        {
+            removingItemIds.Remove(productId);
+            StateHasChanged();
+        }
+    }
+
+    private async Task RemoveSelectedItems()
+    {
+        var selectedItems = GetSelectedItems();
+        if (!selectedItems.Any() || isBulkRemoving) return;
+
+        try
+        {
+            isBulkRemoving = true;
+            StateHasChanged();
+
+            foreach (var item in selectedItems)
+            {
+                await CartService.RemoveFromCartAsync(item.ProductId);
+                cartItems.Remove(item);
+            }
+
+            UpdateSelectionState();
+            ShowNotification($"{selectedItems.Count} article(s) supprimé(s)", "success");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la suppression en lot: {ex.Message}");
+            ShowNotification("Erreur lors de la suppression", "error");
+        }
+        finally
+        {
+            isBulkRemoving = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ClearAllCart()
+    {
+        if (!cartItems.Any() || isClearingCart) return;
+
+        try
+        {
+            isClearingCart = true;
+            StateHasChanged();
+
+            await CartService.ClearCartAsync();
+            cartItems.Clear();
+            UpdateSelectionState();
+
+            // Reset promo
+            promoDiscount = 0;
+            appliedPromoCode = string.Empty;
+            appliedPromoMessage = string.Empty;
+
+            ShowNotification("Panier vidé avec succès", "success");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du vidage du panier: {ex.Message}");
+            ShowNotification("Erreur lors du vidage du panier", "error");
+        }
+        finally
+        {
+            isClearingCart = false;
+            StateHasChanged();
+        }
+    }
+    #endregion
+
+    #region Action Methods
+    private async Task ContinueShopping()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    private void ViewProduct(int productId)
+    {
+        Navigation.NavigateTo($"/details/{productId}");
+    }
+
+    private async Task ProceedToCheckout()
+    {
+        if (!HasSelectedItems() || isProcessingCheckout) return;
+
+        try
+        {
+            isProcessingCheckout = true;
+            StateHasChanged();
+
+            // Simuler un délai de traitement
+            await Task.Delay(1500);
+
+            // Rediriger vers la page de paiement
+            Navigation.NavigateTo("/checkout");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du checkout: {ex.Message}");
+            ShowNotification("Erreur lors du traitement", "error");
+        }
+        finally
+        {
+            isProcessingCheckout = false;
+            StateHasChanged();
+        }
+    }
+
+    private void SaveForLater()
+    {
+        ShowNotification("Panier sauvegardé pour plus tard", "success");
+    }
+
+    private void AddToFavorites(int productId)
+    {
+        ShowNotification("Produit ajouté aux favoris", "success");
+    }
+
+    private async Task ApplyPromoCode()
+    {
+        if (string.IsNullOrEmpty(promoCode) || isApplyingPromo) return;
+
+        try
+        {
+            isApplyingPromo = true;
+            StateHasChanged();
+
+            // Simuler un délai API
+            await Task.Delay(1000);
+
+            // Valider le code promo
+            var (isValid, discount, message) = ValidatePromoCode(promoCode.Trim().ToUpper());
+
+            if (isValid)
+            {
+                promoSuccess = true;
+                promoDiscount = discount;
+                appliedPromoCode = promoCode.ToUpper();
+                appliedPromoMessage = message;
+                ShowNotification($"Code promo appliqué: -{discount}€", "success");
+            }
+            else
+            {
+                promoSuccess = false;
+                promoDiscount = 0;
+                appliedPromoCode = string.Empty;
+                appliedPromoMessage = message;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de l'application du code promo: {ex.Message}");
+            promoSuccess = false;
+            appliedPromoMessage = "Erreur lors de la validation du code";
+        }
+        finally
+        {
+            isApplyingPromo = false;
+            StateHasChanged();
+        }
+    }
+
+    private (bool isValid, decimal discount, string message) ValidatePromoCode(string code)
+    {
+        return code switch
+        {
+            "WELCOME10" => (true, 10, "Code WELCOME10 appliqué: 10€ de réduction"),
+            "BEARS20" => (true, 20, "Code BEARS20 appliqué: 20€ de réduction"),
+            "FREESHIP" => (true, 5, "Code FREESHIP appliqué: livraison gratuite"),
+            "ETERNAL15" => (true, 15, "Code ETERNAL15 appliqué: 15€ de réduction"),
+            _ => (false, 0, "Code promo invalide ou expiré")
+        };
+    }
+    #endregion
+
+    #region Notification Methods
+    private void ShowNotification(string message, string type)
+    {
+        notificationMessage = message;
+        notificationClass = type;
+        notificationIcon = type switch
+        {
+            "success" => "fa-check-circle",
+            "error" => "fa-exclamation-circle",
+            "info" => "fa-info-circle",
+            _ => "fa-info-circle"
+        };
+
+        StateHasChanged();
+
+        // Auto-dismiss après 3 secondes
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(3000);
+            await InvokeAsync(() =>
+            {
+                DismissNotification();
+                StateHasChanged();
+            });
+        });
+    }
+
+    private void DismissNotification()
+    {
+        notificationMessage = string.Empty;
+        notificationClass = string.Empty;
+        notificationIcon = string.Empty;
+    }
+    #endregion
+
+    #region Utility Methods
+    private string GetCategoryDisplayName()
+    {
+        return "Ours en peluche";
+    }
+    #endregion
+}

@@ -1,6 +1,7 @@
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Products\Products_Filters.css
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\js\secondary-navbar.js
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Products\Products_Page.css
+C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Cart.css
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Contact_Section.css
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Product_Section.css
 C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwroot\css\Process_Section.css
@@ -17,6 +18,7 @@ C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Website\wwwr
 wwwroot\app.css
 wwwroot\css\About_Section.css
 wwwroot\css\Admin_Products\CreateProducts.css
+wwwroot\css\Cart.css
 wwwroot\css\Contact_Section.css
 wwwroot\css\Footer_Special.css
 wwwroot\css\Hero_Section.css

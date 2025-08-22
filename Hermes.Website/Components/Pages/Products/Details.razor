@@ -5,6 +5,7 @@
 @inject ProductService ProductService
 @inject IProductImageService ProductImageService
 @inject IImageService ImageService
+@inject ICartService CartService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
@@ -170,36 +171,23 @@
                         <p>@(string.IsNullOrEmpty(product.Description) ? "Description détaillée à venir pour cet adorable ours en peluche." : product.Description)</p>
                     </div>
 
-                    <!-- Images Information -->
-                    @if (productImages.Count > 0)
-                    {
-                        <div class="images-info">
-                            <h3>Galerie (@productImages.Count image@(productImages.Count > 1 ? "s" : ""))</h3>
-                            <div class="images-meta">
-                                @foreach (var image in productImages.Take(3))
-                                {
-                                    <div class="image-meta-item">
-                                        <i class="fas fa-@(IsUrl(image.ImageBase64) ? "link" : "image")"></i>
-                                        <span>@(IsUrl(image.ImageBase64) ? "Image en ligne" : "Image uploadée")</span>
-                                    </div>
-                                }
-                                @if (productImages.Count > 3)
-                                {
-                                    <div class="image-meta-item more">
-                                        <span>+@(productImages.Count - 3) autres images</span>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-
                     <!-- Product Actions -->
                     <div class="product-actions">
                         @if (product.IsPublished)
                         {
-                            <button class="btn btn-primary btn-large" @onclick="AddToCart">
-                                <i class="fas fa-shopping-cart"></i>
-                                Ajouter au panier
+                            <button class="btn btn-primary btn-large @(isAddingToCart ? "loading" : "")"
+                                    @onclick="AddToCart"
+                                    disabled="@isAddingToCart">
+                                @if (isAddingToCart)
+                                {
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Ajout en cours...</span>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Ajouter au panier</span>
+                                }
                             </button>
                         }
                         else
@@ -214,6 +202,15 @@
                             <i class="fas fa-heart"></i>
                             Ajouter aux favoris
                         </button>
+
+                        <!-- Message de feedback pour l'ajout au panier -->
+                        @if (!string.IsNullOrEmpty(cartMessage))
+                        {
+                            <div class="cart-feedback @(cartMessage.Contains("succès") ? "success" : "error")">
+                                <i class="fas @(cartMessage.Contains("succès") ? "fa-check-circle" : "fa-exclamation-circle")"></i>
+                                <span>@cartMessage</span>
+                            </div>
+                        }
                     </div>
 
                     <!-- Product Meta Information -->
@@ -309,6 +306,8 @@
     private bool isLoading = true;
     private bool hasImageError = false;
     private bool showImageModal = false;
+    private bool isAddingToCart = false;
+    private string cartMessage = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -462,12 +461,53 @@
         Navigation.NavigateTo("/");
     }
 
-    private void AddToCart()
+    private async Task AddToCart()
     {
-        if (product != null && product.IsPublished)
+        if (product != null && product.IsPublished && !isAddingToCart)
         {
-            Console.WriteLine($"Adding {product.Nom} to cart");
-            // TODO: Implémenter l'ajout au panier
+            try
+            {
+                isAddingToCart = true;
+                cartMessage = string.Empty;
+                StateHasChanged();
+
+                // Appel simplifié - plus besoin de passer les détails du produit
+                await CartService.AddToCartAsync(product.Id);
+
+                cartMessage = "Produit ajouté au panier avec succès !";
+
+                // Faire disparaître le message après 3 secondes
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(3000);
+                    await InvokeAsync(() =>
+                    {
+                        cartMessage = string.Empty;
+                        StateHasChanged();
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de l'ajout au panier: {ex.Message}");
+                cartMessage = "Erreur lors de l'ajout au panier. Veuillez réessayer.";
+
+                // Faire disparaître le message d'erreur après 3 secondes
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(3000);
+                    await InvokeAsync(() =>
+                    {
+                        cartMessage = string.Empty;
+                        StateHasChanged();
+                    });
+                });
+            }
+            finally
+            {
+                isAddingToCart = false;
+                StateHasChanged();
+            }
         }
     }
 
@@ -511,7 +551,18 @@
     {
         var url = Navigation.Uri;
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", url);
-        // TODO: Afficher une notification de succès
-        Console.WriteLine("Lien copié dans le presse-papiers");
+
+        cartMessage = "Lien copié dans le presse-papiers !";
+
+        // Faire disparaître le message après 2 secondes
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(2000);
+            await InvokeAsync(() =>
+            {
+                cartMessage = string.Empty;
+                StateHasChanged();
+            });
+        });
     }
 }

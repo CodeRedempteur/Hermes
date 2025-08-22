@@ -66,33 +66,16 @@
                                 }
 
                                 <!-- Fallback avec icône simple -->
-
                                 <div class="image-fallback @(ShouldShowFallback(product.Id, imageSrc) ? "show" : "")">
                                     <i class="fas fa-image"></i>
                                 </div>
-                                @* Overlay Actions *@
-                                <div class="product-overlay">
-                                    <div class="overlay-actions">
-                                        <button class="action-btn" title="Voir les détails"
-                                                @onclick:stopPropagation="true"
-                                                @onclick="() => ViewProduct(product.Id)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="action-btn" title="Ajouter aux favoris"
-                                                @onclick:stopPropagation="true"
-                                                @onclick="() => AddToFavorites(product.Id)">
-                                            <i class="fas fa-heart"></i>
-                                        </button>
-                                        @if (product.IsPublished)
-                                        {
-                                            <button class="action-btn primary" title="Ajouter au panier"
-                                                    @onclick:stopPropagation="true"
-                                                    @onclick="() => AddToCart(product.Id)">
-                                                <i class="fas fa-shopping-cart"></i>
-                                            </button>
-                                        }
-                                    </div>
-                                </div>
+
+                                @* Favorite Button - En haut à droite *@
+                                <button class="favorite-btn" title="Ajouter aux favoris"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => AddToFavorites(product.Id)">
+                                    <i class="fas fa-heart"></i>
+                                </button>
 
                                 @* Product Badges *@
                                 @if (IsNewProduct(product.CreatedAt))
@@ -107,21 +90,70 @@
                                 {
                                     <span class="product-badge unavailable">Épuisé</span>
                                 }
+
+                                @* Overlay Actions - Mode Grid seulement *@
+                                @if (viewMode == "grid")
+                                {
+                                    <div class="product-overlay">
+                                        <div class="overlay-actions">
+                                            <button class="action-btn" title="Voir les détails"
+                                                    @onclick:stopPropagation="true"
+                                                    @onclick="() => ViewProduct(product.Id)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            @if (product.IsPublished)
+                                            {
+                                                <button class="action-btn primary" title="Ajouter au panier"
+                                                        @onclick:stopPropagation="true"
+                                                        @onclick="() => AddToCart(product.Id)">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </div>
 
                             @* Product Info *@
+                            @* Product Info - Structure améliorée *@
                             <div class="product-info">
                                 <div class="product-category">@GetCategoryDisplayName(GetProductCategory(product))</div>
                                 <h3 class="product-name">@product.Nom</h3>
                                 <p class="product-description">@(string.IsNullOrEmpty(product.Description) ? "Description à venir..." : product.Description)</p>
 
-                                @*  Prix et autres infos du produit *@
-                                <div class="product-price">@product.Prix.ToString("F0")€</div>
-                                <div class="product-meta">
-                                    <span class="product-status">@(product.IsPublished ? "Disponible" : "Non publié")</span>
-                                    <span class="product-date">@product.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                @* Section bottom avec prix et meta *@
+                                <div class="product-bottom">
+                                    <div class="product-price">@product.Prix.ToString("F0")€</div>
+                                    <div class="product-meta">
+                                        <span class="product-status @(product.IsPublished ? "available" : "unavailable")">
+                                            @(product.IsPublished ? "Disponible" : "Non publié")
+                                        </span>
+                                        <span class="product-date">@product.CreatedAt.ToString("dd/MM/yyyy")</span>
+                                    </div>
                                 </div>
                             </div>
+
+                            @* Actions pour le mode Liste *@
+                            @if (viewMode == "list")
+                            {
+                                <div class="product-actions">
+                                    <button class="list-action-btn" title="Voir les détails"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => ViewProduct(product.Id)">
+                                        <i class="fas fa-eye"></i>
+                                        Voir plus
+                                    </button>
+                                    @if (product.IsPublished)
+                                    {
+                                        <button class="list-action-btn primary" title="Ajouter au panier"
+                                                @onclick:stopPropagation="true"
+                                                @onclick="() => AddToCart(product.Id)">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            Ajouter
+                                        </button>
+                                    }
+                                </div>
+                            }
                         </div>
                     }
                 </div>
@@ -406,6 +438,7 @@
         isLoading = false;
         StateHasChanged();
     }
+
     // Ajoutez cette méthode utilitaire :
     private bool IsUrl(string imageData)
     {

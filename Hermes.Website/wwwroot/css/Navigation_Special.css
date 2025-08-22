@@ -321,3 +321,131 @@ nav li a:focus {
     outline-offset: 2px;
     border-radius: var(--radius-md);
 }
+/* CSS à ajouter au fichier header existant */
+
+/* Séparateur visuel */
+.nav-separator {
+    width: 1px;
+    height: 20px;
+    background: var(--border-color);
+    margin: 0 var(--spacing-sm);
+    opacity: 0.5;
+}
+
+/* Icône panier dans la navigation */
+.cart-nav-item {
+    position: relative;
+}
+
+.cart-link {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(255, 45, 136, 0.1) !important;
+    border: 1px solid rgba(255, 45, 136, 0.3) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--accent-pink) !important;
+    transition: var(--transition-normal) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+    .cart-link:hover {
+        background: rgba(255, 45, 136, 0.2) !important;
+        border-color: var(--accent-pink) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(255, 45, 136, 0.3) !important;
+        color: var(--accent-pink-light) !important;
+    }
+
+    .cart-link i {
+        font-size: 16px;
+        transition: var(--transition-normal);
+    }
+
+    .cart-link:hover i {
+        transform: scale(1.1);
+    }
+
+/* Badge du panier */
+.cart-badge {
+    position: absolute !important;
+    top: -6px !important;
+    right: -6px !important;
+    background: var(--accent-pink) !important;
+    color: var(--white) !important;
+    border-radius: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 2px solid var(--bg-darker) !important;
+    box-shadow: 0 2px 8px rgba(255, 45, 136, 0.4) !important;
+    animation: cart-badge-pulse 2s infinite !important;
+}
+
+/* Animation du badge */
+@keyframes cart-badge-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 2px 12px rgba(255, 45, 136, 0.6);
+    }
+}
+
+/* Badge vide (masqué quand panier vide) */
+.cart-badge.empty {
+    display: none !important;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .nav-separator {
+        display: none;
+    }
+
+    .cart-nav-item {
+        order: -1; /* Place le panier avant les autres liens dans le menu mobile */
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .cart-link {
+        width: 100% !important;
+        height: 48px !important;
+        justify-content: flex-start !important;
+        padding-left: var(--spacing-lg) !important;
+        gap: var(--spacing-md) !important;
+        background: rgba(255, 45, 136, 0.08) !important;
+        border-radius: var(--radius-md) !important;
+        margin: 0 var(--spacing-sm) !important;
+    }
+
+        .cart-link::after {
+            content: 'Mon Panier';
+            font-size: var(--font-size-base);
+            font-weight: 500;
+        }
+
+    .cart-badge {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        margin-left: auto !important;
+        margin-right: var(--spacing-md) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-link {
+        height: 44px !important;
+        font-size: var(--font-size-small) !important;
+    }
+}
