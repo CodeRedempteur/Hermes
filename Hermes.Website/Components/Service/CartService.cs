@@ -10,7 +10,8 @@ namespace Hermes.Website.Services
         Task UpdateQuantityAsync(int productId, int quantity);
         Task RemoveFromCartAsync(int productId);
         Task ClearCartAsync();
-        Task<int> GetCartItemCountAsync();
+        Task<int> GetCartItemCountAsync(); // Nombre d'articles uniques
+        Task<int> GetCartTotalQuantityAsync(); // Quantité totale
         event Action? OnCartChanged;
     }
 
@@ -267,6 +268,32 @@ namespace Hermes.Website.Services
         }
 
         public async Task<int> GetCartItemCountAsync()
+        {
+            try
+            {
+                if (!await IsJavaScriptAvailableAsync())
+                {
+                    return 0;
+                }
+
+                var items = await GetCartItemsAsync();
+
+                // Compter les articles uniques (distinct par ProductId)
+                var uniqueItems = items.GroupBy(x => x.ProductId).Count();
+                Console.WriteLine($"Compteur panier - Articles uniques: {uniqueItems}, Quantité totale: {items.Sum(x => x.Quantity)}");
+
+                return uniqueItems;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Récupère la quantité totale d'articles (en tenant compte des quantités)
+        /// </summary>
+        public async Task<int> GetCartTotalQuantityAsync()
         {
             try
             {

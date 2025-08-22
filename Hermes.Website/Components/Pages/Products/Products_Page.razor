@@ -1,6 +1,7 @@
 ﻿@using Hermes.Website.Services
 @using Hermes.Data.Product.Models
 @inject ProductService ProductService
+@inject ICartService CartService
 @inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
 
@@ -86,10 +87,6 @@
                                 {
                                     <span class="product-badge limited">Édition limitée</span>
                                 }
-                                @if (!product.IsPublished)
-                                {
-                                    <span class="product-badge unavailable">Épuisé</span>
-                                }
 
                                 @* Overlay Actions - Mode Grid seulement *@
                                 @if (viewMode == "grid")
@@ -101,14 +98,20 @@
                                                     @onclick="() => ViewProduct(product.Id)">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            @if (product.IsPublished)
-                                            {
-                                                <button class="action-btn primary" title="Ajouter au panier"
-                                                        @onclick:stopPropagation="true"
-                                                        @onclick="() => AddToCart(product.Id)">
+                                            <button class="action-btn primary @(addingToCartIds.Contains(product.Id) ? "loading" : "")"
+                                                    title="Ajouter au panier"
+                                                    @onclick:stopPropagation="true"
+                                                    @onclick="() => AddToCart(product.Id)"
+                                                    disabled="@addingToCartIds.Contains(product.Id)">
+                                                @if (addingToCartIds.Contains(product.Id))
+                                                {
+                                                    <i class="fas fa-spinner fa-spin"></i>
+                                                }
+                                                else
+                                                {
                                                     <i class="fas fa-shopping-cart"></i>
-                                                </button>
-                                            }
+                                                }
+                                            </button>
                                         </div>
                                     </div>
                                 }
@@ -125,9 +128,7 @@
                                 <div class="product-bottom">
                                     <div class="product-price">@product.Prix.ToString("F0")€</div>
                                     <div class="product-meta">
-                                        <span class="product-status @(product.IsPublished ? "available" : "unavailable")">
-                                            @(product.IsPublished ? "Disponible" : "Non publié")
-                                        </span>
+                                        <span class="product-status available">Disponible</span>
                                         <span class="product-date">@product.CreatedAt.ToString("dd/MM/yyyy")</span>
                                     </div>
                                 </div>
@@ -143,15 +144,22 @@
                                         <i class="fas fa-eye"></i>
                                         Voir plus
                                     </button>
-                                    @if (product.IsPublished)
-                                    {
-                                        <button class="list-action-btn primary" title="Ajouter au panier"
-                                                @onclick:stopPropagation="true"
-                                                @onclick="() => AddToCart(product.Id)">
+                                    <button class="list-action-btn primary @(addingToCartIds.Contains(product.Id) ? "loading" : "")"
+                                            title="Ajouter au panier"
+                                            @onclick:stopPropagation="true"
+                                            @onclick="() => AddToCart(product.Id)"
+                                            disabled="@addingToCartIds.Contains(product.Id)">
+                                        @if (addingToCartIds.Contains(product.Id))
+                                        {
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            <span>Ajout...</span>
+                                        }
+                                        else
+                                        {
                                             <i class="fas fa-shopping-cart"></i>
-                                            Ajouter
-                                        </button>
-                                    }
+                                            <span>Ajouter</span>
+                                        }
+                                    </button>
                                 </div>
                             }
                         </div>
@@ -211,6 +219,22 @@
     </div>
 </div>
 
+@* Notification Toast *@
+@if (!string.IsNullOrEmpty(notificationMessage))
+{
+    <div class="notification-toast @notificationClass">
+        <div class="toast-content">
+            <i class="fas @notificationIcon"></i>
+            <span>@notificationMessage</span>
+        </div>
+        <button class="toast-close" @onclick="DismissNotification">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+}
+
+
+
 @code {
     #region Parameters (nouveaux paramètres pour recevoir les filtres)
     [Parameter] public string SearchTerm { get; set; } = "";
@@ -228,6 +252,7 @@
     private List<Product> filteredProducts = new();
     private Dictionary<int, string> productImages = new();
     private Dictionary<int, bool> imageErrorStates = new(); // Track des erreurs d'image
+    private HashSet<int> addingToCartIds = new(); // Track des produits en cours d'ajout au panier
     private string searchQuery = string.Empty;
     private string selectedCategory = string.Empty;
     private decimal priceFilter = 200;
@@ -241,6 +266,11 @@
     private bool isLoading = true;
     private int totalProducts = 0;
     private int lastResetTrigger = 0;
+
+    // Notification variables
+    private string notificationMessage = string.Empty;
+    private string notificationClass = string.Empty;
+    private string notificationIcon = string.Empty;
     #endregion
 
     #region Image Fallback Methods
@@ -490,6 +520,9 @@
     {
         var query = allProducts.AsQueryable();
 
+        // IMPORTANT: Filtrer d'abord pour n'afficher que les produits publiés
+        query = query.Where(p => p.IsPublished);
+
         // Search filter
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -508,13 +541,7 @@
         // Price filter
         query = query.Where(p => p.Prix <= priceFilter);
 
-        // Availability filter
-        if (showAvailableOnly)
-        {
-            query = query.Where(p => p.IsPublished);
-        }
-
-        // New products filter
+        // New products filter (le filtre "Available Only" est maintenant redondant)
         if (showNewOnly)
         {
             query = query.Where(p => IsNewProduct(p.CreatedAt));
@@ -620,12 +647,32 @@
         await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
-    private void AddToCart(int productId)
+    private async Task AddToCart(int productId)
     {
         var product = allProducts.FirstOrDefault(p => p.Id == productId);
-        if (product != null && product.IsPublished)
+        if (product != null && !addingToCartIds.Contains(productId))
         {
-            Console.WriteLine($"Adding product {product.Nom} to cart");
+            try
+            {
+                addingToCartIds.Add(productId);
+                StateHasChanged();
+
+                Console.WriteLine($"Ajout du produit {product.Nom} au panier...");
+                await CartService.AddToCartAsync(productId);
+
+                ShowNotification($"{product.Nom} ajouté au panier !", "success");
+                Console.WriteLine($"Produit {product.Nom} ajouté au panier avec succès");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de l'ajout au panier: {ex.Message}");
+                ShowNotification("Erreur lors de l'ajout au panier", "error");
+            }
+            finally
+            {
+                addingToCartIds.Remove(productId);
+                StateHasChanged();
+            }
         }
     }
 
@@ -635,7 +682,43 @@
         if (product != null)
         {
             Console.WriteLine($"Adding product {product.Nom} to favorites");
+            ShowNotification($"{product.Nom} ajouté aux favoris !", "success");
         }
     }
+
+    #region Notification Methods
+    private void ShowNotification(string message, string type)
+    {
+        notificationMessage = message;
+        notificationClass = type;
+        notificationIcon = type switch
+        {
+            "success" => "fa-check-circle",
+            "error" => "fa-exclamation-circle",
+            "info" => "fa-info-circle",
+            _ => "fa-info-circle"
+        };
+
+        StateHasChanged();
+
+        // Auto-dismiss après 3 secondes
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(3000);
+            await InvokeAsync(() =>
+            {
+                DismissNotification();
+                StateHasChanged();
+            });
+        });
+    }
+
+    private void DismissNotification()
+    {
+        notificationMessage = string.Empty;
+        notificationClass = string.Empty;
+        notificationIcon = string.Empty;
+    }
+    #endregion
     #endregion
 }

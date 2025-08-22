@@ -1,5 +1,7 @@
-﻿@rendermode InteractiveServer
-
+﻿@using Hermes.Website.Services
+@inject ICartService CartService
+@rendermode InteractiveServer
+@implements IDisposable
 
 <header>
     <div class="container header-container">
@@ -17,12 +19,16 @@
                 <li class="cart-nav-item">
                     <a href="/cart" class="cart-link" title="Mon Panier">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-badge">3</span>
+                        @if (cartItemCount > 0)
+                        {
+                            <span class="cart-badge @(isCartUpdating ? "updating" : "")" title="@cartItemCount article(s) unique(s) - @totalQuantity au total">
+                                @cartItemCount
+                            </span>
+                        }
                     </a>
                 </li>
             </ul>
         </nav>
-
         <!-- Menu burger pour mobile -->
         <button class="menu-toggle" aria-label="Menu">
             <span></span>
@@ -31,3 +37,62 @@
         </button>
     </div>
 </header>
+
+@code {
+    private int cartItemCount = 0;
+    private int totalQuantity = 0;
+    private bool isCartUpdating = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // S'abonner aux changements du panier
+        CartService.OnCartChanged += HandleCartChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Charger le nombre d'items après le premier rendu (évite les problèmes de prerendering)
+            await UpdateCartCount();
+        }
+    }
+
+    private async void HandleCartChanged()
+    {
+        // Animation de mise à jour
+        isCartUpdating = true;
+        await InvokeAsync(StateHasChanged);
+
+        // Attendre un peu pour l'animation
+        await Task.Delay(100);
+
+        // Mettre à jour le compteur
+        await UpdateCartCount();
+
+        // Arrêter l'animation
+        isCartUpdating = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task UpdateCartCount()
+    {
+        try
+        {
+            cartItemCount = await CartService.GetCartItemCountAsync(); // Articles uniques
+            totalQuantity = await CartService.GetCartTotalQuantityAsync(); // Quantité totale
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors de la mise à jour du compteur de panier: {ex.Message}");
+            cartItemCount = 0;
+            totalQuantity = 0;
+        }
+    }
+
+    public void Dispose()
+    {
+        CartService.OnCartChanged -= HandleCartChanged;
+    }
+}
