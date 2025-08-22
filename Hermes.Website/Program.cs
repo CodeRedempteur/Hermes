@@ -17,10 +17,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStat
 // Configuration des HttpClients
 builder.Services.AddHttpClient();
 
-// Enregistrement des services dans l'ordre correct
+// Enregistrement des services dans l'ordre correct (sans doublons)
 builder.Services.AddScoped<ApiService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
 
 var app = builder.Build();
 
@@ -35,7 +36,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 app.MapStaticAssets();
-
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

@@ -1,13 +1,15 @@
 ﻿@page "/admin/create-product"
 @using Hermes.Website.Services
+@using Hermes.Website.Components.Service
 @using Hermes.Data.Product.Models
 @inject ProductService ProductService
+@inject IProductImageService ProductImageService
+@inject IImageService ImageService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 
 <PageTitle>Créer un produit - Eternal Bears</PageTitle>
-<Navigation_Special></Navigation_Special>
 
 <div class="create-product-pro-container">
     <div class="container">
@@ -168,7 +170,17 @@
                                                 var index = i;
                                                 <div class="image-card @(index == 0 ? "primary" : "")">
                                                     <div class="image-preview">
-                                                        <img src="@selectedImages[index].DataUrl" alt="Image @(index + 1)" />
+                                                        <img src="@GetImageDisplayUrl(selectedImages[index])" alt="Image @(index + 1)" />
+
+                                                        <!-- Badge pour les URLs -->
+                                                        @if (selectedImages[index].IsUrl)
+                                                        {
+                                                            <div class="url-badge">
+                                                                <i class="fas fa-link"></i>
+                                                                URL
+                                                            </div>
+                                                        }
+
                                                         <div class="image-overlay">
                                                             <div class="image-actions">
                                                                 @if (index != 0)
@@ -183,6 +195,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     @if (index == 0)
                                                     {
                                                         <div class="primary-badge">
@@ -190,6 +203,23 @@
                                                             Image principale
                                                         </div>
                                                     }
+
+                                                    <!-- Infos sur l'image -->
+                                                    <div class="image-info">
+                                                        @if (selectedImages[index].IsUrl)
+                                                        {
+                                                            <small class="text-muted">
+                                                                <i class="fas fa-link"></i> URL: @selectedImages[index].FileName
+                                                            </small>
+                                                        }
+                                                        else
+                                                        {
+                                                            <small class="text-muted">
+                                                                <i class="fas fa-file"></i> @selectedImages[index].FileName
+                                                                (@((selectedImages[index].FileSize / 1024).ToString("F0")) KB)
+                                                            </small>
+                                                        }
+                                                    </div>
                                                 </div>
                                             }
 
@@ -220,6 +250,22 @@
                                         </div>
                                     </div>
                                 }
+
+                                <!-- Section pour ajouter des URLs d'images -->
+                                <div class="url-input-section">
+                                    <h4><i class="fas fa-link"></i> Ou ajouter une URL d'image</h4>
+                                    <div class="url-input-group">
+                                        <input type="url" @bind="imageUrlInput" placeholder="https://exemple.com/image.jpg" class="form-control" />
+                                        <button type="button" class="btn btn-outline" @onclick="AddImageUrlHandler" disabled="@(selectedImages.Count >= 8)">
+                                            <i class="fas fa-plus"></i>
+                                            Ajouter URL
+                                        </button>
+                                    </div>
+                                    <div class="field-hint">
+                                        <i class="fas fa-info-circle"></i>
+                                        Vous pouvez ajouter des images via URL ou télécharger des fichiers
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
@@ -328,14 +374,18 @@
                                         @if (selectedImages.Any())
                                         {
                                             <div class="main-image">
-                                                <img src="@selectedImages[0].DataUrl" alt="@productName" />
+                                                <img src="@GetImageDisplayUrl(selectedImages[0])" alt="@productName" />
+                                                @if (selectedImages[0].IsUrl)
+                                                {
+                                                    <div class="image-type-badge">URL</div>
+                                                }
                                             </div>
                                             @if (selectedImages.Count > 1)
                                             {
                                                 <div class="thumbnail-list">
                                                     @for (int i = 1; i < Math.Min(selectedImages.Count, 4); i++)
                                                     {
-                                                        <img src="@selectedImages[i].DataUrl" alt="Image @(i + 1)" />
+                                                        <img src="@GetImageDisplayUrl(selectedImages[i])" alt="Image @(i + 1)" />
                                                     }
                                                     @if (selectedImages.Count > 4)
                                                     {
@@ -453,16 +503,10 @@
     </div>
 </div>
 
-<Footer_Special></Footer_Special>
+
 
 @code {
-    // Classe pour gérer les images
-    public class ProductImage
-    {
-        public string DataUrl { get; set; } = string.Empty;
-        public string Base64Data { get; set; } = string.Empty;
-        public string ContentType { get; set; } = string.Empty;
-    }
+    // Utiliser le type ClientProductImage pour éviter les conflits
 
     // Étapes du processus
     private List<CreationStep> steps = new()
@@ -473,277 +517,535 @@
         new("Révision", "Validation finale", "fas fa-check-circle")
     };
 
-    private int currentStep = 0;
+private int currentStep = 0;
 
-    // Variables du produit
-    private string productName = string.Empty;
-    private string productDescription = string.Empty;
-    private decimal? productPrice;
-    private bool isPublished = false;
-    private List<ProductImage> selectedImages = new();
-    private bool isProcessing = false;
+// Variables du produit
+private string productName = string.Empty;
+private string productDescription = string.Empty;
+private decimal? productPrice;
+private bool isPublished = false;
+private List<ClientProductImage> selectedImages = new();
+private bool isProcessing = false;
 
-    // Messages
-    private string? errorMessage;
-    private string? successMessage;
+// Variable pour l'input d'URL
+private string imageUrlInput = string.Empty;
 
-    public class CreationStep
+// Messages
+private string? errorMessage;
+private string? successMessage;
+
+public class CreationStep
+{
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Icon { get; set; }
+
+    public CreationStep(string title, string description, string icon)
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Icon { get; set; }
-
-        public CreationStep(string title, string description, string icon)
-        {
-            Title = title;
-            Description = description;
-            Icon = icon;
-        }
+        Title = title;
+        Description = description;
+        Icon = icon;
     }
+}
 
-    // Méthodes de navigation
-    private void NextStep()
+// ===== MÉTHODES DE NAVIGATION =====
+
+private void NextStep()
+{
+    if (currentStep < steps.Count - 1 && CanProceedToNext())
     {
-        if (currentStep < steps.Count - 1 && CanProceedToNext())
-        {
-            currentStep++;
-            ClearMessages();
-        }
-    }
-
-    private void PreviousStep()
-    {
-        if (currentStep > 0)
-        {
-            currentStep--;
-            ClearMessages();
-        }
-    }
-
-    private void GoToStep(int stepIndex)
-    {
-        if (stepIndex <= currentStep)
-        {
-            currentStep = stepIndex;
-            ClearMessages();
-        }
-    }
-
-    private bool CanProceedToNext()
-    {
-        return currentStep switch
-        {
-            0 => true, // Images optionnelles
-            1 => !string.IsNullOrWhiteSpace(productName) && !string.IsNullOrWhiteSpace(productDescription),
-            2 => productPrice.HasValue && productPrice > 0,
-            _ => true
-        };
-    }
-
-    private bool CanSubmit()
-    {
-        return !string.IsNullOrWhiteSpace(productName) &&
-               !string.IsNullOrWhiteSpace(productDescription) &&
-               productPrice.HasValue &&
-               productPrice > 0;
-    }
-
-    // Méthodes pour les images
-    private async Task HandleImageSelection(InputFileChangeEventArgs e)
-    {
-        var files = e.GetMultipleFiles(8 - selectedImages.Count);
-
-        foreach (var file in files)
-        {
-            // Vérifier la taille (max 10MB)
-            if (file.Size > 10 * 1024 * 1024)
-            {
-                errorMessage = $"Fichier {file.Name} trop volumineux (max 10MB)";
-                continue;
-            }
-
-            // Vérifier le type de fichier
-            if (!file.ContentType.StartsWith("image/"))
-            {
-                errorMessage = $"Fichier {file.Name} n'est pas une image";
-                continue;
-            }
-
-            try
-            {
-                // Lire le fichier
-                var buffer = new byte[file.Size];
-                using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
-                await stream.ReadAsync(buffer);
-
-                // Convertir en base64
-                var base64 = Convert.ToBase64String(buffer);
-                var dataUrl = $"data:{file.ContentType};base64,{base64}";
-
-                selectedImages.Add(new ProductImage
-                {
-                    DataUrl = dataUrl,
-                    Base64Data = base64,
-                    ContentType = file.ContentType
-                });
-
-                ClearMessages();
-            }
-            catch (Exception ex)
-            {
-                errorMessage = $"Erreur lors du traitement de {file.Name}: {ex.Message}";
-            }
-        }
-
-        StateHasChanged();
-    }
-
-    private void RemoveImage(int index)
-    {
-        if (index >= 0 && index < selectedImages.Count)
-        {
-            selectedImages.RemoveAt(index);
-            StateHasChanged();
-        }
-    }
-
-    private void SetAsPrimary(int index)
-    {
-        if (index > 0 && index < selectedImages.Count)
-        {
-            var image = selectedImages[index];
-            selectedImages.RemoveAt(index);
-            selectedImages.Insert(0, image);
-            StateHasChanged();
-        }
-    }
-
-    // Méthode principale de soumission
-    private async Task HandleSubmit()
-    {
-        if (!CanSubmit())
-        {
-            errorMessage = "Veuillez remplir tous les champs requis";
-            return;
-        }
-
-        isProcessing = true;
+        currentStep++;
         ClearMessages();
-        StateHasChanged();
+    }
+}
+
+private void PreviousStep()
+{
+    if (currentStep > 0)
+    {
+        currentStep--;
+        ClearMessages();
+    }
+}
+
+private void GoToStep(int stepIndex)
+{
+    if (stepIndex <= currentStep)
+    {
+        currentStep = stepIndex;
+        ClearMessages();
+    }
+}
+
+private bool CanProceedToNext()
+{
+    return currentStep switch
+    {
+        0 => true, // Images optionnelles
+        1 => !string.IsNullOrWhiteSpace(productName) && !string.IsNullOrWhiteSpace(productDescription),
+        2 => productPrice.HasValue && productPrice > 0,
+        _ => true
+    };
+}
+
+private bool CanSubmit()
+{
+    return !string.IsNullOrWhiteSpace(productName) &&
+           !string.IsNullOrWhiteSpace(productDescription) &&
+           productPrice.HasValue &&
+           productPrice > 0;
+}
+
+// ===== MÉTHODES POUR LES IMAGES =====
+
+/// <summary>
+/// Gère la sélection de fichiers images
+/// </summary>
+private async Task HandleImageSelection(InputFileChangeEventArgs e)
+{
+    var files = e.GetMultipleFiles(8 - selectedImages.Count);
+
+    foreach (var file in files)
+    {
+        // Vérifier la taille (max 10MB)
+        if (file.Size > 10 * 1024 * 1024)
+        {
+            errorMessage = $"Fichier {file.Name} trop volumineux (max 10MB)";
+            continue;
+        }
+
+        // Vérifier le type de fichier
+        if (!file.ContentType.StartsWith("image/"))
+        {
+            errorMessage = $"Fichier {file.Name} n'est pas une image";
+            continue;
+        }
 
         try
         {
-            // Créer l'objet ProductCreateDto
-            var productDto = new ProductCreateDto
+            // Utiliser le service d'image pour convertir
+            var base64Data = await ImageService.ConvertFileToBase64Async(file, 10 * 1024 * 1024);
+            var dataUrl = ImageService.GetImageDataUrl(base64Data);
+
+            selectedImages.Add(new ClientProductImage
             {
-                Nom = productName.Trim(),
-                Description = productDescription.Trim(),
-                Prix = productPrice!.Value,
-                IsPublished = isPublished,
-                ImageId = null, // Sera défini après la création de l'image
-                PlastiqueId = null,
-                CategorieId = null,
-                TagId = null,
-                StockId = null,
-                SeoId = null
-            };
+                DataUrl = dataUrl,
+                Base64Data = base64Data,
+                FileName = file.Name,
+                FileSize = file.Size,
+                IsPrimary = selectedImages.Count == 0 // La première image est principale
+            });
 
-            // Créer le produit
-            var createdProduct = await ProductService.CreateProductAsync(productDto);
-
-            if (createdProduct != null)
-            {
-                successMessage = $"Produit '{createdProduct.Nom}' créé avec succès !";
-
-                // TODO: Gérer l'upload des images si vous avez un service d'image
-                // Si vous avez des images, vous devriez les sauvegarder et mettre à jour le produit
-                // avec l'ImageId correspondant
-
-                // Rediriger vers la liste des produits après un délai
-                await Task.Delay(2000);
-                Navigation.NavigateTo("/admin/products");
-            }
-            else
-            {
-                errorMessage = "Erreur lors de la création du produit. Veuillez réessayer.";
-            }
+            ClearMessages();
         }
         catch (Exception ex)
         {
-            errorMessage = $"Erreur: {ex.Message}";
-        }
-        finally
-        {
-            isProcessing = false;
-            StateHasChanged();
+            errorMessage = $"Erreur lors du traitement de {file.Name}: {ex.Message}";
         }
     }
 
-    private async Task SaveAsDraft()
+    StateHasChanged();
+}
+
+/// <summary>
+/// Ajoute une image via URL
+/// </summary>
+private void AddImageUrlHandler()
+{
+    if (string.IsNullOrWhiteSpace(imageUrlInput))
     {
-        if (string.IsNullOrWhiteSpace(productName))
-        {
-            errorMessage = "Le nom du produit est requis pour sauvegarder";
-            return;
-        }
-
-        isProcessing = true;
-        ClearMessages();
-        StateHasChanged();
-
-        try
-        {
-            var productDto = new ProductCreateDto
-            {
-                Nom = productName.Trim(),
-                Description = productDescription?.Trim() ?? "",
-                Prix = productPrice ?? 0,
-                IsPublished = false, // Forcer en brouillon
-                ImageId = null,
-                PlastiqueId = null,
-                CategorieId = null,
-                TagId = null,
-                StockId = null,
-                SeoId = null
-            };
-
-            var createdProduct = await ProductService.CreateProductAsync(productDto);
-
-            if (createdProduct != null)
-            {
-                successMessage = "Brouillon sauvegardé avec succès !";
-            }
-            else
-            {
-                errorMessage = "Erreur lors de la sauvegarde du brouillon";
-            }
-        }
-        catch (Exception ex)
-        {
-            errorMessage = $"Erreur: {ex.Message}";
-        }
-        finally
-        {
-            isProcessing = false;
-            StateHasChanged();
-        }
+        errorMessage = "Veuillez saisir une URL d'image";
+        return;
     }
 
-    private async Task PreviewProduct()
+    // Valider l'URL
+    if (!Uri.TryCreate(imageUrlInput.Trim(), UriKind.Absolute, out Uri? uri) ||
+        (uri.Scheme != "http" && uri.Scheme != "https"))
     {
-        await JSRuntime.InvokeVoidAsync("console.log", "Aperçu du produit:", new
+        errorMessage = "Format d'URL invalide. Utilisez http:// ou https://";
+        return;
+    }
+
+    // Vérifier si on a encore de la place
+    if (selectedImages.Count >= 8)
+    {
+        errorMessage = "Maximum 8 images autorisées";
+        return;
+    }
+
+    try
+    {
+        selectedImages.Add(new ClientProductImage
         {
-            Name = productName,
-            Description = productDescription,
-            Price = productPrice,
-            IsPublished = isPublished,
-            ImagesCount = selectedImages.Count
+            DataUrl = imageUrlInput.Trim(), // Pour l'affichage
+            Base64Data = imageUrlInput.Trim(), // Stocké tel quel (URL)
+            FileName = Path.GetFileName(uri.LocalPath) ?? "image-url",
+            FileSize = 0,
+            IsPrimary = selectedImages.Count == 0
         });
+
+        // Nettoyer l'input
+        imageUrlInput = string.Empty;
+        ClearMessages();
+        StateHasChanged();
+    }
+    catch (Exception ex)
+    {
+        errorMessage = $"Erreur lors de l'ajout de l'URL: {ex.Message}";
+    }
+}
+
+/// <summary>
+/// Retourne l'URL d'affichage pour une image
+/// </summary>
+private string GetImageDisplayUrl(ClientProductImage image)
+{
+    return ImageService.GetDisplayUrl(image.Base64Data);
+}
+
+/// <summary>
+/// Supprime une image de la liste
+/// </summary>
+private void RemoveImage(int index)
+{
+    if (index >= 0 && index < selectedImages.Count)
+    {
+        selectedImages.RemoveAt(index);
+        StateHasChanged();
+    }
+}
+
+/// <summary>
+/// Définit une image comme image principale
+/// </summary>
+private void SetAsPrimary(int index)
+{
+    if (index > 0 && index < selectedImages.Count)
+    {
+        // Retirer le flag de toutes les images
+        foreach (var img in selectedImages)
+        {
+            img.IsPrimary = false;
+        }
+
+        // Déplacer l'image sélectionnée en première position
+        var image = selectedImages[index];
+        selectedImages.RemoveAt(index);
+        selectedImages.Insert(0, image);
+
+        // Marquer la première image comme principale
+        selectedImages[0].IsPrimary = true;
+
+        StateHasChanged();
+    }
+}
+
+// ===== MÉTHODES DE SOUMISSION =====
+
+/// <summary>
+/// Méthode principale de soumission du produit
+/// </summary>
+private async Task HandleSubmit()
+{
+    if (!CanSubmit())
+    {
+        errorMessage = "Veuillez remplir tous les champs requis";
+        return;
     }
 
-    private void ClearMessages()
+    isProcessing = true;
+    ClearMessages();
+    StateHasChanged();
+
+    try
     {
-        errorMessage = null;
-        successMessage = null;
+        // 1. Créer le produit d'abord
+        var productDto = new ProductCreateDto
+        {
+            Nom = productName.Trim(),
+            Description = productDescription.Trim(),
+            Prix = productPrice!.Value,
+            IsPublished = isPublished,
+            ImageId = null, // Sera défini après la création de l'image
+            PlastiqueId = null,
+            CategorieId = null,
+            TagId = null,
+            StockId = null,
+            SeoId = null
+        };
+
+        Console.WriteLine($"=== CRÉATION PRODUIT ===");
+        Console.WriteLine($"Nom: {productDto.Nom}");
+        Console.WriteLine($"Prix: {productDto.Prix}");
+        Console.WriteLine($"Images à créer: {selectedImages.Count}");
+
+        var createdProduct = await ProductService.CreateProductAsync(productDto);
+
+        if (createdProduct != null)
+        {
+            Console.WriteLine($"Produit créé avec ID: {createdProduct.Id}");
+
+            // 2. Créer les images si il y en a
+            if (selectedImages.Any())
+            {
+                Console.WriteLine("=== CRÉATION IMAGES ===");
+                var createdImages = await ProductImageService.CreateMultipleImagesAsync(selectedImages, createdProduct.Id);
+
+                if (createdImages.Any())
+                {
+                    Console.WriteLine($"Images créées: {createdImages.Length}");
+
+                    // 3. Définir la première image comme image principale du produit
+                    var primaryImage = createdImages.First();
+                    Console.WriteLine($"Définition image principale: {primaryImage.Id}");
+
+                    var updateSuccess = await UpdateProductMainImage(createdProduct.Id, primaryImage.Id);
+                    Console.WriteLine($"Mise à jour image principale: {updateSuccess}");
+                }
+            }
+
+            successMessage = $"Produit '{createdProduct.Nom}' créé avec succès !";
+
+            // Rediriger vers la liste des produits après un délai
+            await Task.Delay(2000);
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "Erreur lors de la création du produit. Veuillez réessayer.";
+        }
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"ERREUR CRÉATION PRODUIT: {ex.Message}");
+        Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        errorMessage = $"Erreur: {ex.Message}";
+    }
+    finally
+    {
+        isProcessing = false;
+        StateHasChanged();
+    }
+}
+
+/// <summary>
+/// Met à jour l'image principale du produit
+/// </summary>
+private async Task<bool> UpdateProductMainImage(int productId, int imageId)
+{
+    try
+    {
+        var productDto = new ProductCreateDto
+        {
+            Nom = productName.Trim(),
+            Description = productDescription.Trim(),
+            Prix = productPrice!.Value,
+            IsPublished = isPublished,
+            ImageId = imageId, // Définir l'image principale
+            PlastiqueId = null,
+            CategorieId = null,
+            TagId = null,
+            StockId = null,
+            SeoId = null
+        };
+
+        return await ProductService.UpdateProductAsync(productId, productDto);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erreur lors de la mise à jour de l'image principale: {ex.Message}");
+        return false;
+    }
+}
+
+/// <summary>
+/// Sauvegarde le produit comme brouillon
+/// </summary>
+private async Task SaveAsDraft()
+{
+    if (string.IsNullOrWhiteSpace(productName))
+    {
+        errorMessage = "Le nom du produit est requis pour sauvegarder";
+        return;
+    }
+
+    isProcessing = true;
+    ClearMessages();
+    StateHasChanged();
+
+    try
+    {
+        // 1. Créer le produit en brouillon
+        var productDto = new ProductCreateDto
+        {
+            Nom = productName.Trim(),
+            Description = productDescription?.Trim() ?? "",
+            Prix = productPrice ?? 0,
+            IsPublished = false, // Forcer en brouillon
+            ImageId = null,
+            PlastiqueId = null,
+            CategorieId = null,
+            TagId = null,
+            StockId = null,
+            SeoId = null
+        };
+
+        var createdProduct = await ProductService.CreateProductAsync(productDto);
+
+        if (createdProduct != null)
+        {
+            // 2. Sauvegarder les images si il y en a
+            if (selectedImages.Any())
+            {
+                var createdImages = await ProductImageService.CreateMultipleImagesAsync(selectedImages, createdProduct.Id);
+
+                if (createdImages.Any())
+                {
+                    // 3. Définir la première image comme image principale
+                    var primaryImage = createdImages.First();
+                    await UpdateProductMainImage(createdProduct.Id, primaryImage.Id);
+                }
+            }
+
+            successMessage = "Brouillon sauvegardé avec succès !";
+        }
+        else
+        {
+            errorMessage = "Erreur lors de la sauvegarde du brouillon";
+        }
+    }
+    catch (Exception ex)
+    {
+        errorMessage = $"Erreur: {ex.Message}";
+    }
+    finally
+    {
+        isProcessing = false;
+        StateHasChanged();
+    }
+}
+
+/// <summary>
+/// Affiche un aperçu du produit dans la console
+/// </summary>
+private async Task PreviewProduct()
+{
+    await JSRuntime.InvokeVoidAsync("console.log", "=== APERÇU DU PRODUIT ===");
+    await JSRuntime.InvokeVoidAsync("console.log", "Informations:", new
+    {
+        Name = productName,
+        Description = productDescription,
+        Price = productPrice,
+        IsPublished = isPublished,
+        ImagesCount = selectedImages.Count
+    });
+
+    await JSRuntime.InvokeVoidAsync("console.log", "Images:", selectedImages.Select(img => new
+    {
+        IsUrl = img.IsUrl,
+        FileName = img.FileName,
+        FileSize = img.FileSize,
+        IsPrimary = img.IsPrimary
+    }).ToArray());
+}
+
+// ===== MÉTHODES UTILITAIRES =====
+
+/// <summary>
+/// Efface les messages d'erreur et de succès
+/// </summary>
+private void ClearMessages()
+{
+    errorMessage = null;
+    successMessage = null;
+}
+
+/// <summary>
+/// Valide une URL d'image (méthode optionnelle pour validation avancée)
+/// </summary>
+private async Task ValidateImageUrl(string url)
+{
+    try
+    {
+        using var httpClient = new HttpClient();
+        httpClient.Timeout = TimeSpan.FromSeconds(5);
+
+        var response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            errorMessage = "L'URL d'image n'est pas accessible";
+            return;
+        }
+
+        var contentType = response.Content.Headers.ContentType?.MediaType;
+        if (contentType == null || !contentType.StartsWith("image/"))
+        {
+            errorMessage = "L'URL ne pointe pas vers une image valide";
+            return;
+        }
+
+        // Si on arrive ici, l'URL est valide
+        successMessage = "URL d'image validée avec succès ✓";
+        StateHasChanged();
+
+        // Effacer le message après 2 secondes
+        await Task.Delay(2000);
+        successMessage = null;
+        StateHasChanged();
+    }
+    catch (Exception ex)
+    {
+        errorMessage = $"Impossible de valider l'URL: {ex.Message}";
+    }
+}
+
+/// <summary>
+/// Méthode pour prévisualiser une URL avant ajout (appelable depuis l'interface)
+/// </summary>
+private async Task PreviewUrlImage()
+{
+    if (string.IsNullOrWhiteSpace(imageUrlInput)) return;
+
+    try
+    {
+        await ValidateImageUrl(imageUrlInput.Trim());
+    }
+    catch (Exception ex)
+    {
+        errorMessage = $"Erreur de prévisualisation: {ex.Message}";
+    }
+}
+
+/// <summary>
+/// Réinitialise le formulaire
+/// </summary>
+private void ResetForm()
+{
+    productName = string.Empty;
+    productDescription = string.Empty;
+    productPrice = null;
+    isPublished = false;
+    selectedImages.Clear();
+    imageUrlInput = string.Empty;
+    currentStep = 0;
+    ClearMessages();
+    StateHasChanged();
+}
+
+/// <summary>
+/// Calcule le pourcentage de completion du formulaire
+/// </summary>
+private int GetCompletionPercentage()
+{
+    var completed = 0;
+    var total = 4;
+
+    if (selectedImages.Any()) completed++;
+    if (!string.IsNullOrWhiteSpace(productName)) completed++;
+    if (!string.IsNullOrWhiteSpace(productDescription)) completed++;
+    if (productPrice.HasValue && productPrice > 0) completed++;
+
+    return (int)((float)completed / total * 100);
+}
 }

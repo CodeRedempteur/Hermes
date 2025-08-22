@@ -64,8 +64,11 @@ namespace Hermes.CoreServiceAPI
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.WorkspaceId).HasColumnName("workspace_id").HasDefaultValue(0);
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
-                entity.Property(e => e.ImageBase64).HasColumnName("image_base64").HasColumnType("jsonb");
+                entity.Property(e => e.ImageBase64).HasColumnName("image_base64"); // Peut contenir Base64 ou URL
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                // Ignorer la propriété de navigation pour éviter les erreurs automatiques
+                entity.Ignore(e => e.Product);
             });
 
             // Table Plastiques

@@ -1604,3 +1604,142 @@
     .tooltip:hover::before {
         opacity: 1;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS pour les nouvelles fonctionnalités d'images */
+
+.url-input-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+    .url-input-section h4 {
+        margin-bottom: 1rem;
+        color: #4a5568;
+        font-size: 1.1rem;
+    }
+
+.url-input-group {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+    .url-input-group input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+
+    .url-input-group button {
+        padding: 0.75rem 1.5rem;
+        white-space: nowrap;
+    }
+
+.url-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #3b82f6;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.image-type-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.image-info {
+    padding: 0.5rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    border-radius: 0 0 8px 8px;
+}
+
+    .image-info small {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.8rem;
+    }
+
+.field-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+    .field-hint i {
+        color: #3b82f6;
+    }
+
+/* Animation pour les nouvelles images ajoutées */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-card {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Style pour les erreurs de validation d'URL */
+.url-error {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.url-success {
+    color: #059669;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

@@ -18,7 +18,7 @@ CREATE TABLE images (
     id SERIAL PRIMARY KEY,
     workspace_id INTEGER DEFAULT 0,
     product_id INTEGER, -- référence optionnelle au produit
-    image_base64 JSONB,
+    image_base64 Text,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

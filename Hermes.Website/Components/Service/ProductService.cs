@@ -31,7 +31,23 @@ namespace Hermes.Website.Services
                 return Array.Empty<Product>();
             }
         }
+        // Ajoutez cette méthode à votre ProductService :
 
+        /// <summary>
+        /// Récupère une image par son ID
+        /// </summary>
+        public async Task<ImageProduct?> GetImageByIdAsync(int imageId)
+        {
+            try
+            {
+                return await _apiService.GetItemByIdAsync<ImageProduct>("Images", imageId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la récupération de l'image {imageId}: {ex.Message}");
+                return null;
+            }
+        }
         /// <summary>
         /// Récupère un produit par son ID
         /// </summary>

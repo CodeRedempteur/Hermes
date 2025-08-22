@@ -1,5 +1,5 @@
 # Define database name and PostgreSQL connection details
-$scriptPath = "C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes.Website\Hermes.Database\CreateDatabase.psql"
+$scriptPath = "C:\Users\SnifL\Documents\ProjetInformatique\R_Project\Hermes\Hermes.Database\CreateDatabase.psql"
 $dbhost = "localhost"
 $databaseName = "hermes_db_shop"
 $username = "postgres" 

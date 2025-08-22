@@ -50,7 +50,8 @@
                                     string? imageSrc = null;
                                     if (product.ImageId.HasValue && productImages.ContainsKey(product.ImageId.Value))
                                     {
-                                        imageSrc = $"data:image/jpeg;base64,{productImages[product.ImageId.Value]}";
+                                        // L'image est déjà formatée correctement (URL ou data URL)
+                                        imageSrc = productImages[product.ImageId.Value];
                                     }
                                 }
 
@@ -405,6 +406,12 @@
         isLoading = false;
         StateHasChanged();
     }
+    // Ajoutez cette méthode utilitaire :
+    private bool IsUrl(string imageData)
+    {
+        if (string.IsNullOrEmpty(imageData)) return false;
+        return imageData.StartsWith("http://") || imageData.StartsWith("https://");
+    }
 
     private async Task LoadProductImages()
     {
@@ -414,12 +421,23 @@
         {
             try
             {
-                // Récupérer les détails du produit avec l'image
-                var productWithDetails = await ProductService.GetProductWithDetailsAsync(product.Id);
+                // Récupérer l'image depuis l'API
+                var imageResponse = await ProductService.GetImageByIdAsync(product.ImageId.Value);
 
-                // TODO: Adapter selon la structure de votre ImageProduct
-                // Si l'image est stockée en base64 dans ImageBase64
-                // productImages[product.ImageId.Value] = productWithDetails.Image?.ImageBase64 ?? "";
+                if (imageResponse != null && !string.IsNullOrEmpty(imageResponse.ImageBase64))
+                {
+                    // Vérifier si c'est une URL ou du Base64
+                    if (IsUrl(imageResponse.ImageBase64))
+                    {
+                        // C'est une URL, l'utiliser directement
+                        productImages[product.ImageId.Value] = imageResponse.ImageBase64;
+                    }
+                    else
+                    {
+                        // C'est du Base64, créer une data URL
+                        productImages[product.ImageId.Value] = $"data:image/jpeg;base64,{imageResponse.ImageBase64}";
+                    }
+                }
             }
             catch (Exception ex)
             {

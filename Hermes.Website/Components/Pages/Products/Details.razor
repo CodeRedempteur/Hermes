@@ -1,7 +1,10 @@
 ﻿@page "/details/{id}"
 @using Hermes.Website.Services
 @using Hermes.Data.Product.Models
+@using Hermes.Website.Components.Service
 @inject ProductService ProductService
+@inject IProductImageService ProductImageService
+@inject IImageService ImageService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
@@ -56,10 +59,11 @@
 
                 <!-- Product Image Gallery -->
                 <div class="product-gallery">
+                    <!-- Image principale -->
                     <div class="main-image">
-                        @if (!string.IsNullOrEmpty(productImageSrc))
+                        @if (!string.IsNullOrEmpty(GetCurrentImageSrc()))
                         {
-                            <img src="@productImageSrc"
+                            <img src="@GetCurrentImageSrc()"
                                  alt="@product.Nom"
                                  class="product-image"
                                  @onload="OnImageLoad"
@@ -74,13 +78,59 @@
                         </div>
 
                         <!-- Image Zoom Button -->
-                        @if (!string.IsNullOrEmpty(productImageSrc) && !hasImageError)
+                        @if (!string.IsNullOrEmpty(GetCurrentImageSrc()) && !hasImageError)
                         {
                             <button class="zoom-btn" @onclick="OpenImageModal" title="Agrandir l'image">
                                 <i class="fas fa-search-plus"></i>
                             </button>
                         }
+
+                        <!-- Navigation arrows pour plusieurs images -->
+                        @if (productImages.Count > 1)
+                        {
+                            <button class="gallery-nav prev" @onclick="PreviousImage" title="Image précédente">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="gallery-nav next" @onclick="NextImage" title="Image suivante">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        }
+
+                        <!-- Indicateur d'images -->
+                        @if (productImages.Count > 1)
+                        {
+                            <div class="image-counter">
+                                @(currentImageIndex + 1) / @productImages.Count
+                            </div>
+                        }
                     </div>
+
+                    <!-- Miniatures -->
+                    @if (productImages.Count > 1)
+                    {
+                        <div class="thumbnails-container">
+                            <div class="thumbnails-grid">
+                                @for (int i = 0; i < productImages.Count; i++)
+                                {
+                                    var index = i;
+                                    <div class="thumbnail @(currentImageIndex == index ? "active" : "")"
+                                         @onclick="() => SelectImage(index)">
+                                        <img src="@GetImageDisplayUrl(productImages[index])"
+                                             alt="Image @(index + 1)"
+                                             loading="lazy" />
+
+                                        <!-- Badge pour identifier le type d'image -->
+                                        @if (IsUrl(productImages[index].ImageBase64))
+                                        {
+                                            <div class="image-type-badge">
+                                                <i class="fas fa-link"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <!-- Product Information -->
@@ -119,6 +169,29 @@
                         <h3>Description</h3>
                         <p>@(string.IsNullOrEmpty(product.Description) ? "Description détaillée à venir pour cet adorable ours en peluche." : product.Description)</p>
                     </div>
+
+                    <!-- Images Information -->
+                    @if (productImages.Count > 0)
+                    {
+                        <div class="images-info">
+                            <h3>Galerie (@productImages.Count image@(productImages.Count > 1 ? "s" : ""))</h3>
+                            <div class="images-meta">
+                                @foreach (var image in productImages.Take(3))
+                                {
+                                    <div class="image-meta-item">
+                                        <i class="fas fa-@(IsUrl(image.ImageBase64) ? "link" : "image")"></i>
+                                        <span>@(IsUrl(image.ImageBase64) ? "Image en ligne" : "Image uploadée")</span>
+                                    </div>
+                                }
+                                @if (productImages.Count > 3)
+                                {
+                                    <div class="image-meta-item more">
+                                        <span>+@(productImages.Count - 3) autres images</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
 
                     <!-- Product Actions -->
                     <div class="product-actions">
@@ -159,6 +232,13 @@
                             <span class="meta-label">Référence :</span>
                             <span class="meta-value">EB-@product.Id.ToString("D4")</span>
                         </div>
+                        @if (productImages.Count > 0)
+                        {
+                            <div class="meta-item">
+                                <span class="meta-label">Images :</span>
+                                <span class="meta-value">@productImages.Count image@(productImages.Count > 1 ? "s" : "")</span>
+                            </div>
+                        }
                     </div>
 
                     <!-- Social Share -->
@@ -190,17 +270,42 @@
             <button class="modal-close" @onclick="CloseImageModal">
                 <i class="fas fa-times"></i>
             </button>
-            <img src="@productImageSrc" alt="@product?.Nom" class="modal-image" />
+
+            <!-- Navigation dans le modal -->
+            @if (productImages.Count > 1)
+            {
+                <button class="modal-nav prev" @onclick="PreviousImageModal" title="Image précédente">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="modal-nav next" @onclick="NextImageModal" title="Image suivante">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            }
+
+            <img src="@GetCurrentImageSrc()" alt="@product?.Nom" class="modal-image" />
+
+            <!-- Informations sur l'image dans le modal -->
+            <div class="modal-image-info">
+                <span>Image @(currentImageIndex + 1) de @productImages.Count</span>
+                @if (productImages.Count > 0 && currentImageIndex < productImages.Count)
+                {
+                    <span class="image-type">
+                        @(IsUrl(productImages[currentImageIndex].ImageBase64) ? "Image en ligne" : "Image uploadée")
+                    </span>
+                }
+            </div>
         </div>
     </div>
 }
+
 
 @code {
     [Parameter]
     public string Id { get; set; } = "";
 
     private Product? product;
-    private string? productImageSrc;
+    private List<ImageProduct> productImages = new();
+    private int currentImageIndex = 0;
     private bool isLoading = true;
     private bool hasImageError = false;
     private bool showImageModal = false;
@@ -231,7 +336,7 @@
 
                 if (product != null)
                 {
-                    await LoadProductImage();
+                    await LoadProductImages();
                 }
             }
         }
@@ -245,27 +350,84 @@
         StateHasChanged();
     }
 
-    private async Task LoadProductImage()
+    private async Task LoadProductImages()
     {
-        if (product?.ImageId.HasValue == true)
+        if (product == null) return;
+
+        try
         {
-            try
-            {
-                var productWithDetails = await ProductService.GetProductWithDetailsAsync(product.Id);
-                // TODO: Adapter selon votre structure d'image
-                // productImageSrc = $"data:image/jpeg;base64,{productWithDetails.Image?.ImageBase64}";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erreur lors du chargement de l'image: {ex.Message}");
-                hasImageError = true;
-            }
+            // Récupérer toutes les images du produit
+            var images = await ProductImageService.GetProductImagesAsync(product.Id);
+            productImages = images.ToList();
+
+            Console.WriteLine($"Images trouvées pour le produit {product.Id}: {productImages.Count}");
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du chargement des images: {ex.Message}");
+            productImages = new List<ImageProduct>();
+        }
+    }
+
+    // Méthodes de navigation d'images
+    private void SelectImage(int index)
+    {
+        if (index >= 0 && index < productImages.Count)
+        {
+            currentImageIndex = index;
+            hasImageError = false;
+            StateHasChanged();
+        }
+    }
+
+    private void PreviousImage()
+    {
+        currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : productImages.Count - 1;
+        hasImageError = false;
+        StateHasChanged();
+    }
+
+    private void NextImage()
+    {
+        currentImageIndex = currentImageIndex < productImages.Count - 1 ? currentImageIndex + 1 : 0;
+        hasImageError = false;
+        StateHasChanged();
+    }
+
+    private void PreviousImageModal()
+    {
+        PreviousImage();
+    }
+
+    private void NextImageModal()
+    {
+        NextImage();
+    }
+
+    // Méthodes d'affichage des images
+    private string GetCurrentImageSrc()
+    {
+        if (productImages.Count == 0 || currentImageIndex >= productImages.Count)
+            return string.Empty;
+
+        return GetImageDisplayUrl(productImages[currentImageIndex]);
+    }
+
+    private string GetImageDisplayUrl(ImageProduct image)
+    {
+        if (image?.ImageBase64 == null) return string.Empty;
+
+        return ImageService.GetDisplayUrl(image.ImageBase64);
+    }
+
+    private bool IsUrl(string? imageData)
+    {
+        return ImageService.IsUrl(imageData ?? string.Empty);
     }
 
     private bool ShouldShowFallback()
     {
-        return string.IsNullOrEmpty(productImageSrc) || hasImageError;
+        return string.IsNullOrEmpty(GetCurrentImageSrc()) || hasImageError;
     }
 
     private void OnImageLoad()

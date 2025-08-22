@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="wwwroot\css\About_Section.css" />
     <None Include="wwwroot\css\Contact_Section.css" />
@@ -16,14 +14,11 @@
     <None Include="wwwroot\css\Process_Section.css" />
     <None Include="wwwroot\css\Product_Section.css" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Components\Controllers\" />
     <Folder Include="Components\Pages\Payements\" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Hermes.Data.Product\Hermes.Data.Product.csproj" />
   </ItemGroup>
-
 </Project>
